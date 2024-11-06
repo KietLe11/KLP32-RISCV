@@ -40,5 +40,8 @@ jobs:
 
       - name: Run Quartus Compilation
         run: |
+
+          ls -R
+
           # Run Quartus command-line compilation
           /opt/intelFPGA_lite/20.1/quartus/bin/quartus_sh --flow compile RV32I
