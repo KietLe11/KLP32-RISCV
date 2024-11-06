@@ -23,7 +23,7 @@ jobs:
       - name: Download and Install Quartus
         run: |
           # Download Quartus Prime Lite installer
-          wget https://cdrdv2.intel.com/v1/dl/getContent/660907/660960?filename=Quartus-lite-20.1.1.720-windows.tar -O quartus_installer.run
+          wget https://cdrdv2.intel.com/v1/dl/getContent/825277/825299?filename=qinst-lite-linux-23.1std.1-993.run -O quartus_installer.run
 
           # Make the installer executable
           chmod +x quartus_installer.run
