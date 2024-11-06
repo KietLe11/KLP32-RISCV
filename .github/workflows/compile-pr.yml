@@ -32,7 +32,7 @@ jobs:
 
           # Run the installer in unattended mode, selecting core components
           ./quartus_installer.run --mode unattended --accept_eula 1 \
-          --disable-components quartus_help,devinfo,arria_lite,cyclone,cyclone10lp,cyclonev,quartus_update,modelsim_ase,modelsim_ae  \
+          --disable-components quartus_help,devinfov,quartus_update,modelsim_ase,modelsim_ae  \
           --installdir /opt/intelFPGA_lite
 
           # (Optional) Clean up installer
