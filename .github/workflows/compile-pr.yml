@@ -23,12 +23,12 @@ jobs:
       - name: Download and Install Quartus
         run: |
           # Download Quartus Prime Lite installer
-          wget https://cdrdv2.intel.com/v1/dl/getContent/825277/825299?filename=qinst-lite-linux-23.1std.1-993.run -O quartus_installer.run
+          wget https://cdrdv2.intel.com/v1/dl/getContent/825277/825299?filename=qinst-lite-linux-23.1std.1-993.run?accept_eula=1 -O quartus_installer.run
 
           # Make the installer executable
           chmod +x quartus_installer.run
 
-          cat quartus_installer.run
+          # cat quartus_installer.run
 
           # Run the installer in unattended mode, selecting core components
           ./quartus_installer.run --mode unattended --accept_eula 1 \
