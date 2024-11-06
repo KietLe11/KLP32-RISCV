@@ -32,7 +32,7 @@ jobs:
 
           # Run the installer in unattended mode, selecting core components
           ./quartus_installer.run --mode unattended --accept_eula 1 \
-          --disable-components quartus_help,devinfo,arria_lite,cyclone,cyclone10lp,cyclonev,max,quartus_update,modelsim_ase,modelsim_ae  \
+          --disable-components quartus_help,devinfo,arria_lite,cyclone,cyclone10lp,cyclonev,quartus_update,modelsim_ase,modelsim_ae  \
           --installdir /opt/intelFPGA_lite
 
           # (Optional) Clean up installer
@@ -40,8 +40,5 @@ jobs:
 
       - name: Run Quartus Compilation
         run: |
-
-          ls /opt/intelFPGA_lite/quartus
-
           # Run Quartus command-line compilation
           /opt/intelFPGA_lite/quartus/bin/quartus_sh --flow compile RV32I
