@@ -1,0 +1,42 @@
+name: Quartus Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget
+
+      - name: Download and Install Quartus
+        run: |
+          # Download Quartus Prime Lite installer
+          wget https://cdrdv2.intel.com/v1/dl/getContent/660907/660960?filename=Quartus-lite-20.1.1.720-windows.tar -O quartus_installer.run
+
+          # Make the installer executable
+          chmod +x quartus_installer.run
+
+          # Run the installer in unattended mode, selecting core components
+          ./quartus_installer.run --mode unattended --accept_eula 1 \
+          --disable-components modelsim,nios2,eclipse,example_designs \
+          --install-dir /opt/intelFPGA_lite
+
+          # (Optional) Clean up installer
+          rm quartus_installer.run
+
+      - name: Run Quartus Compilation
+        run: |
+          # Run Quartus command-line compilation
+          /opt/intelFPGA_lite/20.1/quartus/bin/quartus_sh --flow compile RV32I
