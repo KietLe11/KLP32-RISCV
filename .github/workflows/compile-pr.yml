@@ -23,7 +23,7 @@ jobs:
       - name: Download and Install Quartus
         run: |
           # Download Quartus Prime Lite installer
-          wget https://download.altera.com/akdlm/software/acdsinst/20.1std.1/720/ib_installers/QuartusLiteSetup-20.1.1.720-linux.run -O quartus_installer.run
+          wget -q https://download.altera.com/akdlm/software/acdsinst/20.1std.1/720/ib_installers/QuartusLiteSetup-20.1.1.720-linux.run -O quartus_installer.run
 
           # Make the installer executable
           chmod +x quartus_installer.run
