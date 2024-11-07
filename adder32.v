@@ -4,7 +4,7 @@ module adder32 (carryin, X, Y, S, carryout);
 parameter n = 32;
 input carryin;
 input [n-1:0] X, Y;
-output [n-1:0] S;
+output reg [n-1:0] S;
 output reg carryout;
 reg [n:0] C;
 integer k;
