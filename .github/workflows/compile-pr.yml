@@ -40,7 +40,7 @@ jobs:
 
       - name: Install MAX 10 Device
         run: |
-          wget -q https://cdrdv2.intel.com/v1/dl/getContent/660904/660965?filename=max10-20.1.1.720.qdz -O max10.qdz
+          wget -q https://downloads.intel.com/akdlm/software/acdsinst/20.1.1/720/ib_installers/max10-20.1.1.720.qdz -O max10.qdz
           cat max10.qdz
           unzip max10.qdz
           mkdir -p /opt/intelFPGA_lite/quartus/common/devinfo/55nm
