@@ -20,12 +20,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y wget
 
-      - name: Install MAX 10 Device
-        run: |
-          wget -q https://downloads.intel.com/akdlm/software/acdsinst/20.1std.1/720/ib_installers/max10-20.1.1.720.qdz
-
       - name: Download and Install Quartus
         run: |
+          # Download MAX 10 Device Family
+          wget -q https://downloads.intel.com/akdlm/software/acdsinst/20.1std.1/720/ib_installers/max10-20.1.1.720.qdz
+
           # Download Quartus Prime Lite installer
           wget -q https://download.altera.com/akdlm/software/acdsinst/20.1std.1/720/ib_installers/QuartusLiteSetup-20.1.1.720-linux.run -O quartus_installer.run
 
@@ -39,15 +38,6 @@ jobs:
 
           # (Optional) Clean up installer
           rm quartus_installer.run
-
-      - name: Install MAX 10 Device
-        run: |
-          # wget -q https://downloads.intel.com/akdlm/software/acdsinst/20.1std.1/720/ib_installers/max10-20.1.1.720.qdz -O max10.qdz
-          # unzip max10.qdz
-          # mkdir -p /opt/intelFPGA_lite/quartus/common/devinfo/55nm
-          # rsync -av -v --ignore-existing ./quartus/common/devinfo/55nm /opt/intelFPGA_lite/quartus/common/devinfo/55nm
-
-          echo hi
 
       - name: Run Quartus Compilation
         run: |
