@@ -40,8 +40,8 @@ jobs:
 
       - name: Install MAX 10 Device
         run: |
-          wget -q https://cdrdv2.intel.com/v1/dl/getContent/660904/660965?filename=max10-20.1.1.720.qdz -O max10.qdz
-          /opt/intelFPGA_lite/quartus/bin/quartus_sh --qinstall -qda ./max10.qdz
+          wget -q https://cdrdv2.intel.com/v1/dl/getContent/660904/660965?filename=max10-20.1.1.720.qdz -O max10.qda
+          /opt/intelFPGA_lite/quartus/bin/quartus_sh --qinstall -qda ./max10
 
       - name: Run Quartus Compilation
         run: |
