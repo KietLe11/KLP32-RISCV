@@ -1,4 +1,5 @@
 // Basic Starter Logical Left Shift
+
 module LLS32 (X, shift, result);
 parameter n = 32;
 input [n-1:0] X;
