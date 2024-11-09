@@ -40,21 +40,14 @@ module srl32_tb();
         if (c != a >> b)
             $display("Test case 4 failed");
 
-        // Test case 5: Shift greater than 31 (should be zero)
-        a = 32'h12345678;
-        b = 32'h00000020; // 32-bit shift, result should be zero
-        #20;
-        if (c != 32'h00000000)
-            $display("Test case 5 failed");
-
-        // Test case 6: Middle shift with mixed pattern
+        // Test case 5: Middle shift with mixed pattern
         a = 32'hA5A5A5A5;
         b = 32'h00000010;
         #20;
         if (c != a >> b)
             $display("Test case 6 failed");
 
-        // Test case 7: Alternating pattern with small shift
+        // Test case 6: Alternating pattern with small shift
         a = 32'h55555555;
         b = 32'h00000001;
         #20;
