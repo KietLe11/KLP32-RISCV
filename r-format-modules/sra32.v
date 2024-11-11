@@ -6,6 +6,6 @@ module sra32(X, shift, result);
     input [4:0] shift;
     output [n-1:0] result;
 
-	assign result = (X >>> shift) | (32'h80000000 & X);
+    assign result = (X >>> shift) | (32'h80000000 & X);
 
 endmodule
