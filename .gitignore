@@ -3,3 +3,4 @@ simulation/
 output_files/
 db/
 *.qws
+*_nativelink_simulation.rpt
