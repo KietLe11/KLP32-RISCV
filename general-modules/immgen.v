@@ -22,7 +22,7 @@ module immgen(instr, imm_sel, imm_extended);
             2'b011:  imm_extend = {instr[31], instr[30:20], instr[19:12], 12'b0};
             
             // J-Type Immediate extension
-            2'b100: assign imm_extend = {{12{instr[31]}}, instr[19:12], instr[20], instr[30:25], instr[24:21], 1'b0};
+            2'b100:  imm_extend = {{12{instr[31]}}, instr[19:12], instr[20], instr[30:25], instr[24:21], 1'b0};
             
             // Default case for undefined imm_sel
             default:  imm_extend = 32'bx;
