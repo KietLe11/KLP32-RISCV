@@ -29,12 +29,12 @@ module memory_tb();
 
         // Test Case 1: Write to register and verify read data
         write_enable = 1;
-        addr = 10'd0;     // Choose address 1 for this test
+        addr = 10'd1;     // Choose address 1 for this test
         write_data = 32'hDEADBEEF;
         #20;                   // Wait for write to complete
 
         write_enable = 0;      // Disable write
-        addr = 10'd0;     // Set read address to match written address
+        addr = 10'd1;     // Set read address to match written address
         #20;
 
         // Test Case 1: Check if data is read correctly
