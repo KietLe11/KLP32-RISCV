@@ -2,7 +2,7 @@
 module memory_tb();
 
     parameter n = 32;
-    reg [9:0] addr;
+    reg [n-1:0] addr;
     reg [n-1:0] write_data;
     reg write_enable;
     wire [n-1:0] read_data;
