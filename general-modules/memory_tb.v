@@ -80,14 +80,14 @@ module memory_tb();
             $display("Test Case 3 Failed: Unwritten address did not return zero");
         end
 
-		// Test Case 4: Read should combinational (change mid clock cycle)
-		write_enable = 1;
+        // Test Case 4: Read should combinational (change mid clock cycle)
+        write_enable = 1;
         addr = 10'd4;
         write_data = 32'h91827364;
         #5;
         write_enable = 0;
         addr = 10'd1;
-        #1; 
+        #1;
 
         if (read_data == 32'hDEADBEEF) begin
             $display("Test Case 4 Passed: Read should change mid cycle");
