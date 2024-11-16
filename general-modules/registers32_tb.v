@@ -88,6 +88,33 @@ module register32_tb();
             $display("Test Case 4 Failed: Return write data was not read out");
         end
 
+        // Test Case 5: Write to the zero register
+        write_enable = 1;
+        write_addr = 5'd0;
+        write_data = 32'h98761234;
+        read_addr1 = 5'd0;
+        #20;
+
+        if (read_data1 == 32'd0) begin
+            $display("Test Case 5 Passed: Writing to register 0 should always return 0");
+        end else begin
+            $display("Test Case 5 Failed: Writing to register 0 should always return 0");
+        end
+
+        // Test Case 6: Read Zero register
+        write_enable = 0;
+        write_addr = 5'd0;
+        write_data = 32'h43219876;
+        read_addr1 = 5'd0;
+        read_addr2 = 5'd0;
+        #20
+
+        if (read_data1 == 32'd0 && read_data2 == 32'd0) begin
+            $display("Test Case 6 Passed: Reading Zero Register should always be 0");
+        end else begin
+            $display("Test Case 6 Failed: Reading Zero Register should always be 0");
+        end
+
     end
 
 endmodule
