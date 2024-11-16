@@ -20,8 +20,11 @@ module memory (clk, write_enable, addr, write_data, read_data);
     always @(posedge clk) begin
         if (write_enable)
             memory_block[addr[9:0]] <= write_data;
-        else
-            read_data <= memory_block[addr[9:0]];
+    end
+
+    // Combinational read: always output data at addr
+    always @(*) begin
+        read_data = memory_block[addr[9:0]];
     end
 
 endmodule
