@@ -1,4 +1,4 @@
-module memory (clk, write_enable, addr, write_data, read_data);
+module data_memory32 (clk, write_enable, addr, write_data, read_data);
 
     parameter n = 32;
     input clk;

@@ -8,7 +8,7 @@ module memory_tb();
     wire [n-1:0] read_data;
     reg clk;
 
-    memory dut(.clk(clk), .write_enable(write_enable), .addr(addr), .write_data(write_data), .read_data(read_data));
+    data_memory32 dut(.clk(clk), .write_enable(write_enable), .addr(addr), .write_data(write_data), .read_data(read_data));
 
     always begin
         clk = 1'b1;
