@@ -1,3 +1,5 @@
+// Testing all memory addresses
+
 `timescale 1 ns/1 ps
 module data_memory32_tb1();
 
@@ -28,6 +30,7 @@ module data_memory32_tb1();
         #10;
     end
 
+    // Test all 1024 memory addresses for 0 data
     integer i;
     initial begin
         $display("Starting memory test...");
