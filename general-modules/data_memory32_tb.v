@@ -1,5 +1,5 @@
 `timescale 1 ns/1 ps
-module memory_tb();
+module data_memory32_tb();
 
     parameter n = 32;
     reg [n-1:0] addr;
