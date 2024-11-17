@@ -13,7 +13,7 @@ module inst_memory32 (addr, inst);
             inst_memory[i] = 32'b0;
         end
         // Load instructions from the file
-        $readmemh("/home/kiet/repos/RISCV-DE1OLITE/general-modules/inst_startup_commands.mem", inst_memory);
+        $readmemh("/home/kiet/repos/RISCV-DE1OLITE/general-modules/test_instructions.hex", inst_memory);
     end
 
     always @(*) begin
