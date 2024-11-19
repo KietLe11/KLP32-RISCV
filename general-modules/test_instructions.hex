@@ -1,0 +1,6 @@
+00000013  // nop (No operation, encoded as ADDI x0, x0, 0)
+00100093  // li x1, 1 (Load immediate 1 into register x1)
+00200113  // li x2, 2 (Load immediate 2 into register x2)
+004081b3  // add x3, x1, x2 (x3 = x1 + x2)
+00510193  // addi x3, x2, 5 (x3 = x2 + 5)
+00008067  // ret (Return from subroutine, assuming x0 is the link register)
