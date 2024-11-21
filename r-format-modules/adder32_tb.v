@@ -8,7 +8,7 @@ module adder32_tb();
     wire [31:0] c;
     wire d;
 
-    adder32 dut(.carryin(0), .X(a), .Y(b), .S(c), .carryout(d));
+    adder32 dut(.X(a), .Y(b), .result(c), .overflow(d));
 
     initial
     begin
@@ -35,6 +35,13 @@ module adder32_tb();
 
         if (c != 32'd1)
             $display("0 + 1 should be 1");
+
+        a = 32'hFFFFFFFF;
+        b = 32'd1;
+        #20; // 20 ns
+
+        if (c != 32'd0)
+            $display("Max hFFFFFFFF + 1 should result in 0");
 
     end
 

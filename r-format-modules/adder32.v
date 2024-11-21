@@ -1,23 +1,11 @@
-// Inspired by: Brown, S., & Vranesic, Z. (2014). Fundamentals of Digital Logic with Verilog Design (3rd ed.). McGraw-Hill Education.
-module adder32 (carryin, X, Y, S, carryout);
+module adder32 (X, Y, result, overflow);
 
     parameter n = 32;
-    input carryin;
     input [n-1:0] X, Y;
-    output reg [n-1:0] S;
-    output reg carryout;
-    reg [n:0] C;
-    integer k;
+    output [n-1:0] result;
+    output overflow;
 
-    always @(X, Y, carryin)
-    begin
-        C[0] = carryin;
-        for (k = 0; k< n; k = k+1)
-        begin
-            S[k] = X[k] ^ Y[k] ^ C[k];
-            C[k+1] = (X[k] & Y[k]) | (X[k] & C[k]) | (Y[k] & C[k]);
-        end
-        carryout = C[n];
-    end
+    assign result = X + Y;
+    assign overflow = (X + Y) > 32'hFFFFFFFF;
 
 endmodule
