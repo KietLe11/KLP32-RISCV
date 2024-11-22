@@ -37,6 +37,9 @@ module alu32 (X, Y, select, result);
     wire [n-1:0] xorResult;
     xor32 xor_func(.X(X), .Y(Y), .result(xorResult));
 
+    // Passthrough second input
+    wire [n-1:0] yPassthrough = Y;
+
     always @(*) begin
         case (select)
             4'b0000: result = adderResult;
@@ -49,6 +52,7 @@ module alu32 (X, Y, select, result);
             4'b1101: result = sraResult;
             4'b0110: result = orResult;
             4'b0111: result = andResult;
+            4'b1111: result = yPassthrough;
         endcase
     end
 

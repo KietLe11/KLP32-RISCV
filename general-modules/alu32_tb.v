@@ -1,3 +1,4 @@
+`timescale 1 ns/1 ps
 module alu32_tb();
 
     parameter n = 32;
@@ -13,9 +14,9 @@ module alu32_tb();
     // Generate clock signal
     always begin
         clk = 1'b1;
-        #1;
+        #10;
         clk = 1'b0;
-        #1;
+        #10;
     end
 
     initial begin
@@ -26,12 +27,12 @@ module alu32_tb();
         expected_result = 32'd0;
 
         // Test case 1: Addition
-        #2;
+        #20;
         a = 32'd10;
         b = 32'd20;
         selector = 4'b0000;  // adderResult
         expected_result = 32'd30;
-        #2;
+        #20;
         check_result("Addition");
 
         // Test case 2: Subtraction
@@ -39,7 +40,7 @@ module alu32_tb();
         b = 32'd30;
         selector = 4'b1000;  // subtractResult
         expected_result = 32'd20;
-        #2;
+        #20;
         check_result("Subtraction");
 
         // Test case 3: Logical shift left
@@ -47,7 +48,7 @@ module alu32_tb();
         b = 32'd1;
         selector = 4'b0001;  // sllResult
         expected_result = a << b;
-        #2;
+        #20;
         check_result("Logical Shift Left");
 
         // Test case 4: Set less than (signed)
@@ -55,7 +56,7 @@ module alu32_tb();
         b = 32'd15;
         selector = 4'b0010;  // sltResult
         expected_result = (a < b) ? 32'd1 : 32'd0;
-        #2;
+        #20;
         check_result("Set Less Than (Signed)");
 
         // Test case 5: Set less than (unsigned)
@@ -63,7 +64,7 @@ module alu32_tb();
         b = 32'd15;
         selector = 4'b0011;  // sltUResult
         expected_result = ($unsigned(a) < $unsigned(b)) ? 32'd1 : 32'd0;
-        #2;
+        #20;
         check_result("Set Less Than (Unsigned)");
 
         // Test case 6: XOR
@@ -71,7 +72,7 @@ module alu32_tb();
         b = 32'd30;
         selector = 4'b0100;  // xorResult
         expected_result = a ^ b;
-        #2;
+        #20;
         check_result("XOR");
 
         // Test case 7: Logical shift right
@@ -79,7 +80,7 @@ module alu32_tb();
         b = 32'd1;
         selector = 4'b1101;  // srlResult
         expected_result = a >> b;
-        #2;
+        #20;
         check_result("Logical Shift Right");
 
         // Test case 8: Arithmetic shift right
@@ -87,7 +88,7 @@ module alu32_tb();
         b = 32'd1;
         selector = 4'b1101;  // sraResult
         expected_result = $signed(a) >>> b;
-        #2;
+        #20;
         check_result("Arithmetic Shift Right");
 
         // Test case 9: OR
@@ -95,7 +96,7 @@ module alu32_tb();
         b = 32'd5;
         selector = 4'b0110;  // orResult
         expected_result = a | b;
-        #2;
+        #20;
         check_result("OR");
 
         // Test case 10: AND
@@ -103,11 +104,17 @@ module alu32_tb();
         b = 32'd7;
         selector = 4'b0111;  // andResult
         expected_result = a & b;
-        #2;
+        #20;
         check_result("AND");
 
-        // Finish simulation
-        $finish;
+        // Test case 11: Passthrough
+        a = 32'd15;
+        b = 32'd7;
+        selector = 4'b1111;
+        expected_result = 32'd7;
+        #20;
+        check_result("Passthrough");
+
     end
 
     // Task to check result and print pass/fail
