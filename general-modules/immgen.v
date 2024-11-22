@@ -5,7 +5,7 @@ module immgen(instr, imm_sel, imm_extended);
     input [31:7] instr;
     input [k-1:0] imm_sel;
     output  [31:0] imm_extended;
-	reg [31:0] imm_extend = 32'bx;
+    reg [31:0] imm_extend = 32'bx;
 
     always @(imm_sel, instr) begin
         case (imm_sel)
