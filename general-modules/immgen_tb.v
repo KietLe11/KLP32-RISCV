@@ -24,34 +24,35 @@ module immgen_tb;
         instr = 25'b0000000001001000000000010;  // Example bits for I-type immediate
         imm_sel = 3'b000;  // Assume imm_sel = 000 for I-type
         #10;
-        $display("I-type immediate: Expected = [EXPECTED_VALUE], Got = %h", imm_extended);
+        check_result("I-type");
 
         // Test S-type immediate (e.g., sw)
         instr = 25'b0000000000000001001000001;  // Example bits for S-type immediate
         imm_sel = 3'b001;  // Assume imm_sel = 001 for S-type
         #10;
-        $display("S-type immediate: Expected = [EXPECTED_VALUE], Got = %h", imm_extended);
+        check_result("S-type");
 
         // Test B-type immediate (e.g., beq)
         instr = 25'b1111111000000000010001100;  // Example bits for B-type immediate
         imm_sel = 3'b010;  // Assume imm_sel = 010 for B-type
         #10;
-        $display("B-type immediate: Expected = [EXPECTED_VALUE], Got = %h", imm_extended);
+        check_result("B-type");
 
         // Test U-type immediate (e.g., lui)
         instr = 25'b0001001001100101000000001;  // Example bits for U-type immediate
         imm_sel = 3'b011;  // Assume imm_sel = 011 for U-type
         #10;
-        $display("U-type immediate: Expected = [EXPECTED_VALUE], Got = %h", imm_extended);
+        check_result("U-type");
 
         // Test J-type immediate (e.g., jal)
         instr = 25'b1111111111110000000010001;  // Example bits for J-type immediate
         imm_sel = 3'b100;  // Assume imm_sel = 100 for J-type
         #10;
-        $display("J-type immediate: Expected = [EXPECTED_VALUE], Got = %h", imm_extended);
-
-        // End simulation
-        $stop;
+        check_result("J-type");
     end
+
+    task check_result(input [255:0] test_name);
+        $display("%s. immediate generated: %h", test_name, imm_extended);
+    endtask
 
 endmodule
