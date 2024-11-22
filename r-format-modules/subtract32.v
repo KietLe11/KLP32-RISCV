@@ -1,21 +1,14 @@
-module subtract32 (X, Y, result);
+module subtract32 (X, Y, result, overflow);
 
     parameter n = 32;
     input [n-1:0] X, Y;
     output [n-1:0] result;
+    output overflow;
 
-    wire carryout;
-    wire [n-1:0] adderResult;
+    assign result = X - Y;
 
-    // Implement subtractor by using Two's complement addition
-    adder32 subtractor (
-        .carryin(1'b1),
-        .X(X),
-        .Y(~Y),
-        .S(adderResult),
-        .carryout(carryout)
-    );
-
-    assign result = adderResult;
+    // Detect overflow:
+    assign overflow = (X[31] == 0 && Y[31] == 1 && result[31] == 1)  // Positive overflow
+                    | (X[31] == 1 && Y[31] == 0 && result[31] == 0); // Negative overflow
 
 endmodule
