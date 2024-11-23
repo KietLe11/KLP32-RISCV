@@ -16,10 +16,9 @@ This projects was developed with Intel Quartus and Simulated on the DE10-Lite Bo
       ├── .github                 # Github Actions
       │   └── workflows
       │   │   └── compile-pr.yml  # Pull Request Quartus Compiling Checker
-      ├── klp32-verilog-modules   # Verilog Modules
-      │   ├── alu-modules         # ALU Modules
-      │   ├── general-modules     # Major modules (i.e., ALU, Register File, etc.)
-      │   └── misc-modules        # Miscellaneous modules (i.e., Muxes)
+      ├── alu-modules             # ALU Verilog Modules
+      ├── general-modules         # Major Verilog modules (i.e., ALU, Register File, etc.)
+      ├── misc-modules            # Miscellaneous Verilog modules (i.e., Muxes)
       ├── KLP32V1.qpf             # Quartus Project File
       ├── KLP32V1.qsf             # Quartus Settings File
       ├── KLP32V1.v               # Main processor file
