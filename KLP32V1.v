@@ -1,4 +1,4 @@
-module RV32I(clk);
+module KLP32V1(clk);
 
 input wire clk;
 

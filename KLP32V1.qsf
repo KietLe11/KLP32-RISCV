@@ -26,7 +26,7 @@
 # Notes:
 #
 # 1) The default values for assignments are stored in the file:
-#		RV32I_assignment_defaults.qdf
+#		KLP32V1_assignment_defaults.qdf
 #    If this file doesn't exist, see file:
 #		assignment_defaults.qdf
 #
@@ -39,7 +39,7 @@
 
 set_global_assignment -name FAMILY "MAX 10"
 set_global_assignment -name DEVICE 10M08DAF484C8G
-set_global_assignment -name TOP_LEVEL_ENTITY RV32I
+set_global_assignment -name TOP_LEVEL_ENTITY KLP32V1
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 20.1.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "09:53:03  NOVEMBER 06, 2024"
 set_global_assignment -name LAST_QUARTUS_VERSION "20.1.0 Lite Edition"
@@ -85,7 +85,7 @@ set_global_assignment -name VERILOG_FILE "r-format-modules/and32_tb.v"
 set_global_assignment -name VERILOG_FILE "r-format-modules/and32.v"
 set_global_assignment -name VERILOG_FILE "r-format-modules/sra32_tb.v"
 set_global_assignment -name VERILOG_FILE "r-format-modules/sra32.v"
-set_global_assignment -name VERILOG_FILE RV32I.v
+set_global_assignment -name VERILOG_FILE KLP32V1.v
 set_global_assignment -name VERILOG_FILE "r-format-modules/srl32_tb.v"
 set_global_assignment -name VERILOG_FILE "r-format-modules/srl32.v"
 set_global_assignment -name VERILOG_FILE "r-format-modules/xor32_tb.v"
