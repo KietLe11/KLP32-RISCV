@@ -18,7 +18,7 @@ module inst_memory32 (addr, inst);
 
     always @(*) begin
         // 4KB has 10 bit address space
-        inst = inst_memory[addr[9:0]];
+        inst = inst_memory[addr[11:2]];
     end
 
 endmodule

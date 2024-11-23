@@ -19,7 +19,7 @@ module inst_memory32_tb();
     initial begin
         $display("Starting memory test...");
         for (i = 0; i < 20; i = i + 1) begin
-            addr = i;
+            addr = i*4; // addresses are multiples of 4
             #1; // Wait for data_out to update
             $display("address %0d: value = %h", i, inst);
         end
