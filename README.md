@@ -23,3 +23,7 @@ This projects was developed with Intel Quartus and Simulated on the DE10-Lite Bo
       ├── KLP32V1.qsf             # Quartus Settings File
       ├── KLP32V1.v               # Main processor file
       └── README.md
+
+### Microarchitecture
+![alt text](rv32i_microarchitecture.png)
+Image credit: EECS4201: Computer Architecture, Sebastian Magierowski, York University.
