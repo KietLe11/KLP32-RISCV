@@ -7,11 +7,15 @@ module KLP32V1(clk, reset);
     logic [24:0] immIn;
 
     // TODO: Control
+    logic RegWEn, ALUsrc1, ALUsrc2, BrUn, memRW, ldU, PCSel;
+    logic [2:0] immSel;
+    logic [3:0] aluSel;
+    logic [1:0] wb_select;
 
     // Program Counter Logic
     pc_increment pcInc(.pc_in(pcOut), .pc_out(pc_inc_out));
-    pc_select_mux pcSelMux(.pc_in(pc_inc_out), .alu_in(aluOut), .pc_sel(CONTROL), .result(pcSelMuxOut));
-    pc ProgramCounter(.clk(clk), .reset(reset), .pc_in(pcSelMuxOut), pc_out(pcOut));
+    pc_select_mux pcSelMux(.pc_in(pc_inc_out), .alu_in(aluOut), .pc_sel(PCSel), .result(pcSelMuxOut));
+    pc ProgramCounter(.clk(clk), .reset(reset), .pc_in(pcSelMuxOut), .pc_out(pcOut));
 
     // Instruction Memory
     inst_memory32 instMem(.addr(pcOut), .inst(inst));
@@ -26,23 +30,23 @@ module KLP32V1(clk, reset);
                         .read_addr2(regAddr2),
                         .write_addr(writeReg),
                         .write_data(writeBack),
-                        .write_enable(CONTROL),
+                        .write_enable(RegWEn),
                         .read_data1(regData1),
                         .read_data2(regData2));
 
     // TODO: Branch Comp
 
     //Immediate Generator
-    immgen immGen(.instr(immIn), imm_sel(CONTROL), .imm_extended(immGenOut));
+    immgen immGen(.instr(immIn), .imm_sel(immSel), .imm_extended(immGenOut));
 
     // ALU and ALU Inputs
-    alu_input_mux_A aluInMuxA(.pc_in(pcOut), .data1(regData1), .A_select(CONTROL), .out(aluInA));
-    alu_input_mux_B aluInMuxB(.data2(regData2), .immGenData(immGenOut), .B_select(CONTROL), .out(aluInB));
-    alu32 alu(.X(aluInA), .Y(aluInB), .select(CONTROL), .result(aluOut));
+    alu_input_mux_A aluInMuxA(.pc_in(pcOut), .data1(regData1), .A_select(ALUsrc1), .out(aluInA));
+    alu_input_mux_B aluInMuxB(.data2(regData2), .immGenData(immGenOut), .B_select(ALUsrc2), .out(aluInB));
+    alu32 alu(.X(aluInA), .Y(aluInB), .select(aluSel), .result(aluOut));
 
     // Data Memory
     data_memory32 dataMem(.clk(clk),
-                          .write_enable(CONTROL),
+                          .write_enable(memRW),
                           .addr(aluOut),
                           .write_data(regData2),
                           .read_data(dataMemReadOut));
@@ -51,7 +55,7 @@ module KLP32V1(clk, reset);
     writeback_mux wbMux(.pc_in(pc_inc_out),
                         .alu_in(aluOut),
                         .mem_in(dataMemReadOut),
-                        .wb_select(CONTROL),
-                        .writeBack(writeBack));
+                        .wb_select(wb_select),
+                        .writeback(writeBack));
 
 endmodule
