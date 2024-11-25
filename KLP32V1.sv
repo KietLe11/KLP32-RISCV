@@ -16,7 +16,7 @@ module KLP32V1(clk, reset);
     registers32 regFile(.clk(clk), .read_addr1(inst[19:15]), .read_addr2(inst[24:20]), .write_addr(inst[11:7]), .write_data(writeBack), .write_enable(CONTROL), .read_data1(regData1), .read_data2(regData2));
 
     logic immGenOut;
-    immgen immGen(.instr(inst), imm_sel(CONTROL), .imm_extended(immGenOut));
+    immgen immGen(.instr(inst[31:7]), imm_sel(CONTROL), .imm_extended(immGenOut));
 
     logic aluInA;
     alu_input_mux_A aluInMuxA(.pc_in(pcOut), .data1(regData1), .A_select(CONTROL), .out(aluInA));
