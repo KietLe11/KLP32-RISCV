@@ -47,6 +47,5 @@ module slt_tb();
         if (c != 32'h00000000)
             $display("Test case 5 failed: a (positive) > b (negative)");
 
-
     end
 endmodule

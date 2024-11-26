@@ -5,7 +5,7 @@ module pc (clk, reset, pc_in, pc_out);
     input wire clk, reset;
     output reg [n-1:0] pc_out;
 
-    always @(posedge clk or reset) begin
+    always @(posedge clk or posedge reset) begin
         if (reset) begin
             pc_out <= 32'd0;
         end else begin

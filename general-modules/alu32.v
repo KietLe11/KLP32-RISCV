@@ -21,7 +21,7 @@ module alu32 (X, Y, select, result);
     wire [n-1:0] sltUResult;
     slt_u sltU_func(.X(X), .Y(Y), .result(sltUResult));
 
-    wire sltResult;
+    wire [n-1:0] sltResult;
     slt slt_func(.X(X), .Y(Y), .result(sltResult));
 
     wire [n-1:0] sraResult;
