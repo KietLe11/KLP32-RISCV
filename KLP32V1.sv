@@ -7,7 +7,7 @@ module KLP32V1(clk, reset);
     logic [24:0] immIn;
 
     // TODO: Control
-    logic RegWEn, ALUsrc1, ALUsrc2, BrUn, memRW, ldU, PCSel;
+    logic RegWEn, ALUsrc1, ALUsrc2, BrUn, memRW, ldU, PCSel, BrEq, BrLT;
     logic [2:0] immSel;
     logic [3:0] aluSel;
     logic [1:0] wb_select;
@@ -15,7 +15,10 @@ module KLP32V1(clk, reset);
     // Program Counter Logic
     pc_increment pcInc(.pc_in(pcOut), .pc_out(pc_inc_out));
     pc_select_mux pcSelMux(.pc_in(pc_inc_out), .alu_in(aluOut), .pc_sel(PCSel), .result(pcSelMuxOut));
-    pc ProgramCounter(.clk(clk), .reset(reset), .pc_in(pcSelMuxOut), .pc_out(pcOut));
+    pc ProgramCounter(.clk(clk),
+                      .reset(reset),
+                      .pc_in(pcSelMuxOut),
+                      .pc_out(pcOut));
 
     // Instruction Memory
     inst_memory32 instMem(.addr(pcOut), .inst(inst));
@@ -34,15 +37,23 @@ module KLP32V1(clk, reset);
                         .read_data1(regData1),
                         .read_data2(regData2));
 
-    // TODO: Branch Comp
+    // Branch Comp
+    branch_comp branchComp(.data1(regData1),
+                           .data2(regData2),
+                           .BrUn(BrUn),
+                           .BrEq(BrEq),
+                           .BrLT(BrLT));
 
-    //Immediate Generator
+    // Immediate Generator
     immgen immGen(.instr(immIn), .imm_sel(immSel), .imm_extended(immGenOut));
 
     // ALU and ALU Inputs
     alu_input_mux_A aluInMuxA(.pc_in(pcOut), .data1(regData1), .A_select(ALUsrc1), .out(aluInA));
     alu_input_mux_B aluInMuxB(.data2(regData2), .immGenData(immGenOut), .B_select(ALUsrc2), .out(aluInB));
-    alu32 alu(.X(aluInA), .Y(aluInB), .select(aluSel), .result(aluOut));
+    alu32 alu(.X(aluInA),
+              .Y(aluInB),
+              .select(aluSel),
+              .result(aluOut));
 
     // Data Memory
     data_memory32 dataMem(.clk(clk),
