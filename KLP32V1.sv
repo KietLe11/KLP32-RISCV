@@ -15,7 +15,7 @@ module KLP32V1(clk, reset);
     assign immSel = 3'b000;
     assign aluSel = {inst[30], inst[14:12]};
     assign wb_select = 2'b001;
-    controls = 9'b1_0_0_0_0_0_0_1_1;
+    assign controls = 9'b1_0_0_0_0_0_0_1_1;
     assign {RegWEn, ALUsrc1, ALUsrc2, BrUn, memRW, ldU, PCSel, BrEq, BrLT} = controls;
 
     // Program Counter Logic
