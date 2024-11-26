@@ -21,7 +21,7 @@ This projects was developed with Intel Quartus and Simulated on the DE10-Lite Bo
       ├── misc-modules            # Miscellaneous Verilog modules (i.e., Muxes)
       ├── KLP32V1.qpf             # Quartus Project File
       ├── KLP32V1.qsf             # Quartus Settings File
-      ├── KLP32V1.v               # Main processor file
+      ├── KLP32V1.sv               # Main processor file
       └── README.md
 
 ### Microarchitecture

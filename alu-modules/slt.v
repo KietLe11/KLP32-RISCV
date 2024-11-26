@@ -3,7 +3,7 @@ module slt (X, Y, result);
 
     parameter n = 32;
     input [n-1:0] X, Y;
-    output reg result;
+    output reg [n-1:0] result;
 
     reg resultReg;
 
