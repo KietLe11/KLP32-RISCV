@@ -1,3 +1,4 @@
+`timescale 1ns/1ps
 module KLP32V1_tb();
 
     logic clk, reset;
