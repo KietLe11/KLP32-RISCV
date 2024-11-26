@@ -1,4 +1,0 @@
-module control_tb(); 
-    reg [31:0] instr; 
-    reg BrEq; 
-    reg BrLT; 

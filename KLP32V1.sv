@@ -7,17 +7,16 @@ module KLP32V1(clk, reset);
     logic [24:0] immIn;
 
     // TODO: Control
-    logic [8:0] controls; 
+    logic [8:0] controls;
     logic RegWEn, ALUsrc1, ALUsrc2, BrUn, memRW, ldU, PCSel, BrEq, BrLT;
     logic [2:0] immSel;
     logic [3:0] aluSel;
     logic [1:0] wb_select;
-    assign immSel = 3'b000; 
+    assign immSel = 3'b000;
     assign aluSel = {inst[30], inst[14:12]};
-    assign wb_select = 2'b001; 
-    controls = 9'b1_0_0_x_0_x_0_1_1; 
-    assign {RegWEn, ALUsrc1, ALUsrc2, BrUn, memRW, ldU, PCSel, BrEq, BrLT} = controls; 
-    
+    assign wb_select = 2'b001;
+    controls = 9'b1_0_0_0_0_0_0_1_1;
+    assign {RegWEn, ALUsrc1, ALUsrc2, BrUn, memRW, ldU, PCSel, BrEq, BrLT} = controls;
 
     // Program Counter Logic
     pc_increment pcInc(.pc_in(pcOut), .pc_out(pc_inc_out));
