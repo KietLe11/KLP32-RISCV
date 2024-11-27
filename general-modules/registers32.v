@@ -8,7 +8,7 @@ module registers32 (clk, read_addr1, read_addr2, write_addr, write_data, write_e
     output [n-1:0] read_data1;
     output [n-1:0] read_data2;
 
-    reg [32:0] gpr [n-1:0]; // All riscv specifications have 32 GPRs
+    reg [31:0] gpr [n-1:0]; // All riscv specifications have 32 GPRs
 
     // Initialize all registers to zero
     integer i;
@@ -24,7 +24,7 @@ module registers32 (clk, read_addr1, read_addr2, write_addr, write_data, write_e
     assign read_data2 = (write_enable & read_addr2 == write_addr & read_addr2 != 32'd0) ? write_data : gpr[read_addr2];
 
     always @(posedge clk) begin
-        if (write_enable & write_addr != 32'd0) begin
+        if (write_enable & write_addr != 5'd0) begin
             gpr[write_addr] <= write_data;
         end
     end
