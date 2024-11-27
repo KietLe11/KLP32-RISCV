@@ -8,7 +8,8 @@ module KLP32V1(clk, reset);
 
     // Control
     logic [8:0] controls;
-    logic RegWEn, ALUsrc1, ALUsrc2, BrUn, memRW, ldU, PCSel, BrEq, BrLT;
+    logic RegWEn, ALUsrc1, ALUsrc2, BrUn, memRW, PCSel, BrEq, BrLT;
+    logic [2:0] ldU;
     logic [2:0] immSel;
     logic [3:0] aluSel;
     logic [1:0] wb_select;
