@@ -48,7 +48,7 @@ module control (clk, instr,BrLT, BrEq, RegWEn, ImmSel, ALUsrc1, ALUsrc2, AluSEL,
                     branch_pcSel = 1;
                 else if(funct3 == 000 & BrEq) //BEQ
                     branch_pcSel = 1;
-                else if((funct3 == 101 & funct3 == 111) & !BrLT)  //BGE and BGEU
+                else if((funct3 == 101 || funct3 == 111) & !BrLT)  //BGE and BGEU
                     branch_pcSel = 1;
                 else
                     branch_pcSel = 0;
