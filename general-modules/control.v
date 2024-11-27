@@ -30,14 +30,14 @@ module control (clk, instr,BrLT, BrEq, RegWEn, ImmSel, ALUsrc1, ALUsrc2, AluSEL,
                 alucontrol = {instr[30],instr[14:12]};
             end
             7'b0010011 : begin
-                controls <= 15'b1_000_0_1_x_0_0_xxx_01_0; // I-TYPE OPERATIONS
+                controls = 15'b1_000_0_1_x_0_0_xxx_01_0; // I-TYPE OPERATIONS
                 if (funct3 == 101)
                     alucontrol = {instr[30],instr[14:12]};
                 else
                     alucontrol = {1'b0,instr[14:12]};
             end
             7'b0100011 : begin
-                controls <= 15'b0_001_0_1_x_0_1_xxx_01_0; // S-TYPE OPERATIONS
+                controls = 15'b0_001_0_1_x_0_1_xxx_01_0; // S-TYPE OPERATIONS
                 alucontrol = 4'b0000;
             end
             7'b1100011 : begin
