@@ -1,5 +1,5 @@
 `timescale 1ns/1ps
-module control_tb(); 
+module control_tb1(); 
     parameter n = 32; 
     reg clk, BrLT, BrEq;
     reg [n-1:0] instr; 
