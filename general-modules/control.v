@@ -54,7 +54,7 @@ module control (instr,BrLT, BrEq, RegWEn, ImmSel, ALUsrc1, ALUsrc2, AluSEL, BrUn
                 controls = {1'b0, 3'b010, 1'b1, 1'b1 ,1'bx, 1'b0, 3'bxxx, 2'b01, branch_pcSel};
             end
             7'b0000011 : begin
-                controls = 14'b1_000_0_1_x_0_xxx_10_0; // LOAD OPERATIONS
+                controls = 14'b1_000_0_1_x_0_xxx_00_0; // LOAD OPERATIONS
                 alucontrol = 4'b0000;
             end
             7'b1101111 : begin
