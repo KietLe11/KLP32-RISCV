@@ -9,7 +9,6 @@ module control_tb1();
     wire [1:0] WBSel; 
 
     control uut(
-        .clk(clk),
         .BrEq(BrEq), 
         .BrLT(BrLT),
         .RegWEn(RegWEn), 

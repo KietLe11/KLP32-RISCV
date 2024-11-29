@@ -1,7 +1,6 @@
-module control (clk, instr,BrLT, BrEq, RegWEn, ImmSel, ALUsrc1, ALUsrc2, AluSEL, BrUn, MemRw, ldU,WBSel, PCSel);
+module control (instr,BrLT, BrEq, RegWEn, ImmSel, ALUsrc1, ALUsrc2, AluSEL, BrUn, MemRw, ldU,WBSel, PCSel);
 
     parameter n = 32;
-    input clk;
     input [n-1:0] instr;
     input BrEq, BrLT;
 
@@ -43,16 +42,16 @@ module control (clk, instr,BrLT, BrEq, RegWEn, ImmSel, ALUsrc1, ALUsrc2, AluSEL,
             7'b1100011 : begin
                 alucontrol = 4'b0000;
                 if(funct3 == 001 & !BrEq) // BNE
-                    branch_pcSel = 1;
+                    branch_pcSel = 1'b1;
                 else if((funct3 == 100 || funct3 == 110)& BrLT) //BLTU and BLT
-                    branch_pcSel = 1;
+                    branch_pcSel = 1'b1;
                 else if(funct3 == 000 & BrEq) //BEQ
-                    branch_pcSel = 1;
+                    branch_pcSel = 1'b1;
                 else if((funct3 == 101 || funct3 == 111) & !BrLT)  //BGE and BGEU
-                    branch_pcSel = 1;
+                    branch_pcSel = 1'b0;
                 else
                     branch_pcSel = 0;
-                controls = {1'b0, 3'b010, 1'b1, 1'b1, {BrUn}, 1'b0, 3'bxxx, 2'b01, {branch_pcSel}};
+                controls = {1'b0, 3'b010, 1'b1, 1'b1 ,1'bx, 1'b0, 3'bxxx, 2'b01, branch_pcSel};
             end
             7'b0000011 : begin
                 controls = 14'b1_000_0_1_x_0_xxx_10_0; // LOAD OPERATIONS
@@ -79,7 +78,5 @@ module control (clk, instr,BrLT, BrEq, RegWEn, ImmSel, ALUsrc1, ALUsrc2, AluSEL,
                 alucontrol = 4'b0000;
             end
         endcase
-
-        // $display("At time %t: controls = %b (opcode = %b)", $time, controls, opcode);
     end
 endmodule

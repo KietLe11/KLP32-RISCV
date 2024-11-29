@@ -13,8 +13,7 @@ module KLP32V1(clk, reset);
     logic [2:0] immSel;
     logic [3:0] aluSel;
     logic [1:0] wb_select;
-    control controller(.clk(clk),
-                       .instr(inst),
+    control controller(.instr(inst),
                        .BrLT(BrLT),
                        .BrEq(BrEq),
                        .RegWEn(RegWEn),

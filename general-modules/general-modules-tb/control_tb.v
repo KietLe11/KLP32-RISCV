@@ -17,7 +17,6 @@ module control_tb;
 
     // Instantiate the control module
     control uut (
-        .clk(clk),
         .instr(instr),
         .BrEq(BrEq),
         .BrLT(BrLT),
