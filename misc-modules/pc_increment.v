@@ -1,6 +1,6 @@
 module pc_increment (pc_in, pc_out);
 
-    parameter n = 32;
+    parameter integer n = 32;
     input [n-1:0] pc_in;
     output [n-1:0] pc_out;
 

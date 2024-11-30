@@ -3,7 +3,7 @@
 `timescale 1 ns/1 ps
 module data_memory32_tb1();
 
-    parameter n = 32;
+    parameter integer n = 32;
     reg [n-1:0] addr;
     reg [n-1:0] write_data;
     reg write_enable;

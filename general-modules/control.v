@@ -1,6 +1,7 @@
-module control (instr,BrLT, BrEq, RegWEn, ImmSel, ALUsrc1, ALUsrc2, AluSEL, BrUn, MemRw, ldU,WBSel, PCSel);
+module control (instr,BrLT, BrEq, RegWEn, ImmSel, ALUsrc1,
+                ALUsrc2, AluSEL, BrUn, MemRw, ldU,WBSel, PCSel);
 
-    parameter n = 32;
+    parameter integer n = 32;
     input [n-1:0] instr;
     input BrEq, BrLT;
 

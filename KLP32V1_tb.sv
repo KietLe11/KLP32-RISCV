@@ -9,7 +9,7 @@ module KLP32V1_tb();
     initial clk = 0;
     always #10 clk = ~clk; // 20 ns clock period
 
-	initial begin
+    initial begin
         reset = 1;
         #10;
         reset = 0;

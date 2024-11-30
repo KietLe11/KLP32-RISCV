@@ -1,6 +1,6 @@
 module alu32 (X, Y, select, result);
 
-    parameter n = 32;
+    parameter integer n = 32;
     input [n-1:0] X, Y;
     input [3:0] select;
     output reg [n-1:0] result;

@@ -1,7 +1,7 @@
 `timescale 1ns/1ps
 
 module control_tb;
-    parameter n = 32;
+    parameter integer n = 32;
 
     // Inputs to the DUT
     reg clk;
@@ -42,12 +42,14 @@ module control_tb;
         input [13:0] expected_controls;
         input [3:0] expected_alucontrol;
         begin
-            if ({RegWEn, ImmSel, ALUsrc1, ALUsrc2, BrUn, MemRw, ldU, WBSel, PCSel} !== expected_controls ||
+            if ({RegWEn, ImmSel, ALUsrc1, ALUsrc2, BrUn,
+                 MemRw, ldU, WBSel, PCSel} !== expected_controls ||
                 AluSEL !== expected_alucontrol) begin
                 $display("%-8s: FAILED for instr = %b", test_name, instr);
-                $display("  Expected: controls = %b, alucontrol = %b", expected_controls, expected_alucontrol);
+                $display("  Expected: controls = %b, alucontrol = %b",
+                            expected_controls, expected_alucontrol);
                 $display("  Got: controls = %b, alucontrol = %b",
-                          {RegWEn, ImmSel, ALUsrc1, ALUsrc2, BrUn, MemRw, ldU, WBSel, PCSel}, AluSEL);
+                        {RegWEn, ImmSel, ALUsrc1, ALUsrc2, BrUn, MemRw, ldU, WBSel, PCSel}, AluSEL);
             end else begin
                 $display("%-8s: PASSED for instr = %b", test_name, instr);
             end

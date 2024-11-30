@@ -1,7 +1,7 @@
 `timescale 1ns/1ps
 module writeback_mux_tb();
 
-    parameter n = 32;
+    parameter integer n = 32;
     reg [n-1:0] pc, alu, mem;
     wire [n-1:0] result;
     reg [1:0] select;

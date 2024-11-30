@@ -1,7 +1,7 @@
 `timescale 1 ns/1 ps
 module alu32_tb();
 
-    parameter n = 32;
+    parameter integer n = 32;
     reg clk;
     reg [n-1:0] a, b;
     reg [3:0] selector;

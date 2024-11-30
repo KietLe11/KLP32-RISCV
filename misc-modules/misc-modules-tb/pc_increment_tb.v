@@ -1,7 +1,7 @@
 `timescale 1ns/1ps
 module pc_increment_tb();
 
-    parameter n = 32;
+    parameter integer n = 32;
     reg [n-1:0] pc;
     wire [n-1:0] result;
     reg clk;

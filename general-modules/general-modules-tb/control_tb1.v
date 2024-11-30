@@ -1,34 +1,34 @@
 `timescale 1ns/1ps
-module control_tb1(); 
-    parameter n = 32; 
+module control_tb1();
+    parameter integer n = 32;
     reg clk, BrLT, BrEq;
-    reg [n-1:0] instr; 
-    wire BrUn, MemRw, RegWEn, PCSel, ALUsrc1, ALUsrc2; 
-    wire [3:0] AluSEL; 
-    wire [2:0] ImmSel, ldU; 
-    wire [1:0] WBSel; 
+    reg [n-1:0] instr;
+    wire BrUn, MemRw, RegWEn, PCSel, ALUsrc1, ALUsrc2;
+    wire [3:0] AluSEL;
+    wire [2:0] ImmSel, ldU;
+    wire [1:0] WBSel;
 
     control uut(
-        .BrEq(BrEq), 
+        .BrEq(BrEq),
         .BrLT(BrLT),
-        .RegWEn(RegWEn), 
-        .ImmSel(ImmSel), 
-        .AluSEL(AluSEL), 
+        .RegWEn(RegWEn),
+        .ImmSel(ImmSel),
+        .AluSEL(AluSEL),
         .ALUsrc1(ALUsrc1),
-        .ALUsrc2(ALUsrc2), 
-        .BrUn(BrUn), 
-        .MemRw(MemRw), 
+        .ALUsrc2(ALUsrc2),
+        .BrUn(BrUn),
+        .MemRw(MemRw),
         .ldU(ldU),
         .WBSel(WBSel),
         .instr(instr),
         .PCSel(PCSel)
     );
 
-    initial begin 
+    initial begin
         // Test Case 1: addi x15, x0, 4 (I-Type)
-        clk = 1; 
-        BrLT = 1; 
-        BrEq = 0; 
+        clk = 1;
+        BrLT = 1;
+        BrEq = 0;
         instr = 32'h00400793; // addi x15, x0, 4 (I-Type)
         #10;
         $display("Instruction: addi x15, x0, 4 // I-Type");
@@ -42,11 +42,11 @@ module control_tb1();
         if (ALUsrc2 != 1'b1)
             $display("Error with the ALUsrc2, Expected: 1");
         if (MemRw != 1'b0)
-            $display("Error with the MemRw, Expected: 0"); 
+            $display("Error with the MemRw, Expected: 0");
         if (WBSel != 2'b01)
-            $display("Error with the WBSel, Expected: 01"); 
+            $display("Error with the WBSel, Expected: 01");
         if (PCSel != 1'b0)
-            $display("Error with the PCSel, Expected: 0"); 
+            $display("Error with the PCSel, Expected: 0");
         if (AluSEL != 4'b0000)
             $display("Error with the AluSEL, Expected: 0000");
 
@@ -55,9 +55,9 @@ module control_tb1();
         #10;
 
         // Test Case 2: sw x15, 4076(x8) (S-Type)
-        clk = 1; 
-        BrLT = 1; 
-        BrEq = 0; 
+        clk = 1;
+        BrLT = 1;
+        BrEq = 0;
         instr = 32'hfef42623; // sw x15, 4076(x8) (S-Type)
         #10;
         $display("Instruction: sw x15, 4076(x8) // S-Type");
@@ -71,11 +71,11 @@ module control_tb1();
         if (ALUsrc2 != 1'b1)
             $display("Error with the ALUsrc2, Expected: 1");
         if (MemRw != 1'b1)
-            $display("Error with the MemRw, Expected: 1"); 
+            $display("Error with the MemRw, Expected: 1");
         if (WBSel != 2'b01) // Not applicable for S-Type
-            $display("Error with the WBSel, Expected: 01"); 
+            $display("Error with the WBSel, Expected: 01");
         if (PCSel != 1'b0)
-            $display("Error with the PCSel, Expected: 0"); 
+            $display("Error with the PCSel, Expected: 0");
         if (AluSEL != 4'b0000)
             $display("Error with the AluSEL, Expected: 0000");
 
@@ -84,9 +84,9 @@ module control_tb1();
         #10;
 
         // Test Case 3: sub x10, x11, x12 (R-Type)
-        clk = 1; 
-        BrLT = 0; 
-        BrEq = 0; 
+        clk = 1;
+        BrLT = 0;
+        BrEq = 0;
         instr = 32'h40C58533; // sub x10, x11, x12 (R-Type)
         #10;
         $display("Instruction: sub x10, x11, x12 // R-Type");
@@ -113,9 +113,9 @@ module control_tb1();
         #10;
 
         // Test Case 4: lw x10, 4(x12) (I-Type)
-        clk = 1; 
-        BrLT = 0; 
-        BrEq = 0; 
+        clk = 1;
+        BrLT = 0;
+        BrEq = 0;
         instr = 32'h00458603; // lw x10, 4(x12) (I-Type)
         #10;
         $display("Instruction: lw x10, 4(x12) // Load Instruction");
@@ -142,9 +142,9 @@ module control_tb1();
         #10;
 
         // Test Case 5: beq x10, x11, offset (B-Type)
-        clk = 1; 
-        BrLT = 0; 
-        BrEq = 1; 
+        clk = 1;
+        BrLT = 0;
+        BrEq = 1;
         instr = 32'h00058663; // beq x10, x11, offset (B-Type)
         #10;
         $display("Instruction: beq x10, x11, offset // Branch Instruction");
@@ -159,7 +159,7 @@ module control_tb1();
             $display("Error with the ALUsrc2, Expected: 1");
         if (MemRw != 1'b0)
             $display("Error with the MemRw, Expected: 0");
-        if (WBSel != 2'b01) 
+        if (WBSel != 2'b01)
             $display("Error with the WBSel, Expected: 01");
         if (PCSel != 1'b1) // Branch taken
             $display("Error with the PCSel, Expected: 1");
@@ -168,6 +168,6 @@ module control_tb1();
 
         $display("Expected Results: RegWEn: 0, ImmSel: 001, ALUsrc1: 0, ALUsrc2: 0, BrUn: 0, MemRw: 0, WBSel: XX, PCSel: 1, AluSEL: 0001");
 
-        $stop; 
+        $stop;
     end
 endmodule

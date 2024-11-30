@@ -1,6 +1,6 @@
 module registers32 (clk, read_addr1, read_addr2, write_addr, write_data, write_enable, read_data1, read_data2);
 
-    parameter n = 32;
+    parameter integer n = 32;
     input clk;
     input [4:0] read_addr1, read_addr2, write_addr;
     input [n-1:0] write_data;
@@ -8,7 +8,7 @@ module registers32 (clk, read_addr1, read_addr2, write_addr, write_data, write_e
     output [n-1:0] read_data1;
     output [n-1:0] read_data2;
 
-    reg [31:0] gpr [n-1:0]; // All riscv specifications have 32 GPRs
+    reg [31:0] gpr [0:n-1]; // All riscv specifications have 32 GPRs
 
     // Initialize all registers to zero
     integer i;

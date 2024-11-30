@@ -1,6 +1,6 @@
 module inst_memory32 (addr, inst);
 
-    parameter n = 32;
+    parameter integer n = 32;
     input [n-1:0] addr;
     output reg [n-1:0] inst;
 

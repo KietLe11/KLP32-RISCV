@@ -1,7 +1,7 @@
 `timescale 1ns/1ps
 module pc_select_mux_tb();
 
-    parameter n = 32;
+    parameter integer n = 32;
     reg [n-1:0] pc, alu;
     wire [n-1:0] result;
     reg pc_sel;

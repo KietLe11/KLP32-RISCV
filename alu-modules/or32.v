@@ -1,6 +1,6 @@
 module or32(X, Y, result);
 
-    parameter n = 32;
+    parameter integer n = 32;
     input [n-1:0] X, Y;
     output [n-1:0] result;
 
