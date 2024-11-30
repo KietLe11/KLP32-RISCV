@@ -15,12 +15,10 @@ module control (instr,BrLT, BrEq, RegWEn, ImmSel, ALUsrc1,
     reg branch_pcSel;
     reg [13:0] controls;
     reg [3:0] alucontrol;
-    reg BrUn_selection;
     assign {AluSEL} = alucontrol;
     assign {RegWEn,ImmSel,ALUsrc1, ALUsrc2, BrUn, MemRw, ldU, WBSel, PCSel} = controls;
 
     always @(*) begin
-        BrUn_selection = instr[14] & instr[13];
         funct3 = instr[14:12];
         opcode = instr[6:0];
 
