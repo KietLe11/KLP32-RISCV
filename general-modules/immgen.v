@@ -1,6 +1,6 @@
 module immgen(instr, imm_sel, imm_extended);
     parameter k = 3;
-    parameter n = 32;
+    parameter integer n = 32;
 
     input [31:7] instr;
     input [k-1:0] imm_sel;

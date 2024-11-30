@@ -2,7 +2,7 @@
 module branch_comp_tb;
 
     // Parameters and signals
-    parameter n = 32;
+    parameter integer n = 32;
 
     logic [n-1:0] data1, data2;
     logic BrUn;
@@ -19,7 +19,7 @@ module branch_comp_tb;
     int num_tests = 0;
     int num_passes = 0;
 
-    task check_result(input string test_name, input logic expected_BrEq, input logic expected_BrLT);
+    task static check_result(input string test_name, input logic expected_BrEq, input logic expected_BrLT);
         num_tests++;
         if (BrEq === expected_BrEq && BrLT === expected_BrLT) begin
             num_passes++;

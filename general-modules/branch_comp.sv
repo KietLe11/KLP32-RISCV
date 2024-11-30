@@ -1,6 +1,6 @@
 module branch_comp(data1, data2, BrUn, BrEq, BrLT);
 
-    parameter n = 32;
+    parameter integer n = 32;
     input logic [n-1:0] data1, data2;
     input logic BrUn;
     output logic BrEq, BrLT;

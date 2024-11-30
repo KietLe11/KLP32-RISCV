@@ -1,6 +1,6 @@
 module data_memory32 (clk, write_enable, addr, write_data, read_data);
 
-    parameter n = 32;
+    parameter integer n = 32;
     input clk;
     input write_enable;
     input [n-1:0] addr, write_data;

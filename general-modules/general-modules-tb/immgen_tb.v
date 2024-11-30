@@ -4,7 +4,7 @@ module immgen_tb;
 
     // Parameters
     parameter k = 3;
-    parameter n = 32;
+    parameter integer n = 32;
 
     // Inputs and outputs for the testbench
     reg [31:7] instr;          // 25-bit instruction input

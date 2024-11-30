@@ -1,6 +1,6 @@
 module pc (clk, reset, pc_in, pc_out);
 
-    parameter n = 32;
+    parameter integer n = 32;
     input wire [n-1:0] pc_in;
     input wire clk, reset;
     output reg [n-1:0] pc_out;

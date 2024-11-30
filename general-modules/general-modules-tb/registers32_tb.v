@@ -1,7 +1,7 @@
 `timescale 1 ns/1 ps
 module register32_tb();
 
-    parameter n = 32;
+    parameter integer n = 32;
     reg [4:0] read_addr1, read_addr2, write_addr;
     reg  [n-1:0] write_data;
     reg write_enable;

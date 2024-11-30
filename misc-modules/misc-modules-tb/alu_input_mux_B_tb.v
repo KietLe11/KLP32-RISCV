@@ -1,7 +1,7 @@
 `timescale 1ns/1ps
 module alu_input_mux_B_tb();
 
-    parameter n = 32;
+    parameter integer n = 32;
     reg [n-1:0] immValue, data;
     wire [n-1:0] result;
     reg bSel;

@@ -1,6 +1,6 @@
 module alu_input_mux_A(pc_in, data1, A_select, out);
 
-    parameter n = 32;
+    parameter integer n = 32;
     input wire [n-1:0] pc_in, data1;
     input wire A_select;
     output wire [n-1:0] out;

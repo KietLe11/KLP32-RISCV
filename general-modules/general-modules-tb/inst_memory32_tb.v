@@ -1,7 +1,7 @@
 `timescale 1 ns/1 ps
 module inst_memory32_tb();
 
-    parameter n = 32;
+    parameter integer n = 32;
     reg [n-1:0] addr;
     wire [n-1:0] inst;
     reg clk;

@@ -1,7 +1,7 @@
 // Set less than SLT Signed
 module slt (X, Y, result);
 
-    parameter n = 32;
+    parameter integer n = 32;
     input [n-1:0] X, Y;
     output reg [n-1:0] result;
 
