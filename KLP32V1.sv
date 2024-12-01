@@ -1,13 +1,22 @@
-module KLP32V1(clk, reset);
+module KLP32V1(clk, reset, o_pcOut, o_aluOut, o_inst, o_dataMemReadOut, o_writeBack, o_BrEq, o_BrLT, o_RegWEn, o_memRW);
 
     input logic clk, reset;
+
+    output logic [31:0] o_pcOut;
+    output logic [31:0] o_aluOut;
+    output logic [31:0] o_inst;
+    output logic [31:0] o_dataMemReadOut;
+    output logic [31:0] o_writeBack;
+    output logic o_BrEq;
+    output logic o_BrLT;
+    output logic o_RegWEn;
+    output logic o_memRW;
 
     logic [31:0] aluInA, aluInB, aluOut, dataMemReadOut, immGenOut, inst, pc_inc_out, pcOut, pcSelMuxOut, regData1, regData2, writeBack;
     logic [4:0] writeReg, regAddr1, regAddr2;
     logic [24:0] immIn;
 
     // Control
-    logic [8:0] controls;
     logic RegWEn, ALUsrc1, ALUsrc2, BrUn, memRW, PCSel, BrEq, BrLT;
     logic [2:0] ldU;
     logic [2:0] immSel;
@@ -83,5 +92,16 @@ module KLP32V1(clk, reset);
                         .mem_in(dataMemReadOut),
                         .wb_select(wb_select),
                         .writeback(writeBack));
+
+    // Output signals to debug interface
+    assign o_pcOut = pcOut;
+    assign o_aluOut = aluOut;
+    assign o_inst = inst;
+    assign o_dataMemReadOut = dataMemReadOut;
+    assign o_writeBack = writeBack;
+    assign o_BrEq = BrEq;
+    assign o_BrLT = BrLT;
+    assign o_RegWEn = RegWEn;
+    assign o_memRW = memRW;
 
 endmodule
