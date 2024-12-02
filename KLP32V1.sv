@@ -60,7 +60,7 @@ module KLP32V1(clk,
                       .pc_out(pcOut));
 
     // Instruction Memory
-    inst_memory32 instMem(.addr(pcOut), .inst(inst));
+    inst_memory32_2 instMem(.addr(pcOut), .inst(inst));
     assign writeReg = inst[11:7];
     assign regAddr1 = inst[19:15];
     assign regAddr2 = inst[24:20];
