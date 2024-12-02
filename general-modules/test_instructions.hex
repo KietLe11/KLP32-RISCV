@@ -1,9 +1,6 @@
 00000013 // nop   (No operation, encoded as ADDI x0, x0, 0)
-00400793 // li    a5,4
-fef42623 // sw    a5,-20(s0)
-00a00793 // li    a5,10
-fef42423 // sw    a5,-24(s0)
-fec42703 // lw    a4,-20(s0)
-fe842783 // lw    a5,-24(s0)
-00f707b3 // add   a5,a4,a5
-fef42223 // sw    a5,-28(s0)
+00500513 // addi  a0, zero, 5
+00400793 // li    a5, 4
+40F50533 // sub   a0, a0, a5
+00A7F833 // and   a6, a5, a0
+00A7F033 // or    a6, a5, a0
