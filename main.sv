@@ -2,6 +2,14 @@ module main (clk, reset);
 
     input clk, reset;
 
+    logic second_clk;
+
+    // Using Clock divider to get 1Hz frequency from 50 MHz system clock
+    Clock secondClock(
+        .clk_in(clk),
+        .clk_out(second_clk)
+    );
+
     logic [31:0] pcOut;
     logic [31:0] aluOut;
     logic [31:0] inst;
@@ -15,7 +23,7 @@ module main (clk, reset);
     logic [31:0] regData2;
 
     KLP32V1 processor(
-        .clk(clk),
+        .clk(second_clk),
         .reset(reset),
         .o_pcOut(pcOut),
         .o_aluOut(aluOut),
