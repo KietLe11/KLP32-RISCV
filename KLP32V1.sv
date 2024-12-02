@@ -1,4 +1,17 @@
-module KLP32V1(clk, reset, o_pcOut, o_aluOut, o_inst, o_dataMemReadOut, o_writeBack, o_BrEq, o_BrLT, o_RegWEn, o_memRW);
+module KLP32V1(clk,
+               reset,
+               o_pcOut,
+               o_aluOut,
+               o_inst,
+               o_dataMemReadOut,
+               o_writeBack,
+               o_BrEq,
+               o_BrLT,
+               o_RegWEn,
+               o_memRW,
+               o_regData1,
+               o_regData2
+               );
 
     input logic clk, reset;
 
@@ -11,6 +24,8 @@ module KLP32V1(clk, reset, o_pcOut, o_aluOut, o_inst, o_dataMemReadOut, o_writeB
     output logic o_BrLT;
     output logic o_RegWEn;
     output logic o_memRW;
+    output logic [31:0] o_regData1;
+    output logic [31:0] o_regData2;
 
     logic [31:0] aluInA, aluInB, aluOut, dataMemReadOut, immGenOut, inst, pc_inc_out, pcOut, pcSelMuxOut, regData1, regData2, writeBack;
     logic [4:0] writeReg, regAddr1, regAddr2;
@@ -103,5 +118,7 @@ module KLP32V1(clk, reset, o_pcOut, o_aluOut, o_inst, o_dataMemReadOut, o_writeB
     assign o_BrLT = BrLT;
     assign o_RegWEn = RegWEn;
     assign o_memRW = memRW;
+    assign o_regData1 = regData1;
+    assign o_regData2 = regData2;
 
 endmodule

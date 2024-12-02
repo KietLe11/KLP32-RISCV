@@ -12,6 +12,8 @@ module KLP32V1_tb();
     logic BrLT;
     logic RegWEn;
     logic memRW;
+    logic [31:0] regData1;
+    logic [31:0] regData2;
 
     KLP32V1 processor(
         .clk(clk),
@@ -24,7 +26,9 @@ module KLP32V1_tb();
         .o_BrEq(BrEq),
         .o_BrLT(BrLT),
         .o_RegWEn(RegWEn),
-        .o_memRW(memRW)
+        .o_memRW(memRW),
+        .o_regData1(regData1),
+        .o_regData2(regData2)
     );
 
     // Generate clock
@@ -34,21 +38,17 @@ module KLP32V1_tb();
     int num_tests = 0;
     int num_passes = 0;
 
-    task static check_result(input string test_name,
-                             input string output_type,
-                             input logic [31:0] instruction,
+    task static check_result(input string output_type,
                              input logic [31:0] actual_value,
                              input logic [31:0] expected_value
                             );
         num_tests++;
         if (actual_value == expected_value) begin
             num_passes++;
-            $display("[PASS] %s: %x", test_name, instruction);
-            $display("For %s, got: %b", output_type, actual_value);
+            $display("[PASS] For %s, got: b'%0b/d'%0d/h'%0h", output_type, actual_value, actual_value, actual_value);
         end else begin
-            $display("[FAIL] %s: %x", test_name, instruction);
-            $display("expected: %b, For %s,", expected_value, output_type);
-            $display("     got: %b, For %s,", actual_value, output_type);
+            $display("[FAIL] expected: b'%0b/d'%0d/h'%0h, for %s,", expected_value, expected_value, expected_value, output_type);
+            $display("            got: b'%0b/d'%0d/h'%0h, for %s,", actual_value, actual_value, actual_value, output_type);
         end
     endtask
 
@@ -57,9 +57,56 @@ module KLP32V1_tb();
         reset = 1;
         #10;
         reset = 0;
-        // Test 1: NOP (No operation, encoded as ADDI x0, x0, 0)
-        check_result("NOP", "ALU Out", inst, aluOut, 32'b0);
+        $display("Test 1: NOP (No operation, encoded as ADDI x0, x0, 0)");
+        check_result("ALU Out", aluOut, 32'b0);
         #20;
+        $display("Test 2: 00500513 // addi a0, zero, 5");
+        check_result("Writeback", writeBack, 32'd5);
+        check_result("RegWEn", RegWEn, 32'd1);
+        #20;
+        $display("Test 3: 00400793 // li    a5,4");
+        check_result("Writeback", writeBack, 32'd4);
+        check_result("RegWEn", RegWEn, 32'd1);
+        #20;
+        $display("Test 4: 40F50533 // sub   a0, a0, a5");
+        check_result("Writeback", writeBack, 32'd1);
+        check_result("RegWEn", RegWEn, 32'd1);
+        #20;
+        $display("Test 5: 00A7F833 // and   a6, a5, a0");
+        check_result("Writeback", writeBack, 32'd0);
+        check_result("RegWEn", RegWEn, 32'd1);
+        #20;
+        $display("Test 6: 00A7F033 // or    a6, a5, a0");
+        check_result("Writeback", writeBack, 32'd5);
+        check_result("RegWEn", RegWEn, 32'd1);
+        #20;
+        // $display("Test 2: 00400793 // li    a5,4");
+        // check_result("Writeback", writeBack, 32'd4);
+        // check_result("RegWEn", RegWEn, 32'd1);
+        // #20;
+        // $display("Test 3: fef42623 // sw    a5,-20(s0)");
+        // check_result("regData2/MemWriteData", regData2, 32'd4);
+        // check_result("memRW", memRW, 1'd1);
+        // #20;
+        // $display("Test 4: 00a00793 // li    a5,10");
+        // check_result("Writeback", writeBack, 32'd10);
+        // check_result("RegWEn", RegWEn, 32'd1);
+        // #20;
+        // $display("Test 5: fef42623 // sw    a5,-24(s0)");
+        // check_result("regData2/MemWriteData", regData2, 32'd10);
+        // check_result("memRW", memRW, 1'd1);
+        // #20;
+        // $display("Test 6: fec42703 // lw    a4,-20(s0)");
+        // check_result("Writeback", writeBack, 32'd4);
+        // check_result("RegWEn", RegWEn, 32'd1);
+        // #20;
+        // $display("Test 7: fe842783 // lw    a5,-24(s0)");
+        // check_result("Writeback", writeBack, 32'd10);
+        // check_result("RegWEn", RegWEn, 32'd1);
+        // #20;
+        // $display("00f707b3 // add   a5,a4,a5");
+        // check_result("Writeback", writeBack, 32'd14);
+        // check_result("RegWEn", RegWEn, 32'd1);
     end
 
 endmodule

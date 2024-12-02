@@ -11,6 +11,8 @@ module main (clk, reset);
     logic BrLT;
     logic RegWEn;
     logic memRW;
+    logic [31:0] regData1;
+    logic [31:0] regData2;
 
     KLP32V1 processor(
         .clk(clk),
@@ -23,7 +25,9 @@ module main (clk, reset);
         .o_BrEq(BrEq),
         .o_BrLT(BrLT),
         .o_RegWEn(RegWEn),
-        .o_memRW(memRW)
+        .o_memRW(memRW),
+        .o_regData1(regData1),
+        .o_regData2(regData2)
     );
 
 endmodule
