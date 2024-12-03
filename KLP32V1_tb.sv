@@ -45,10 +45,22 @@ module KLP32V1_tb();
         num_tests++;
         if (actual_value == expected_value) begin
             num_passes++;
-            $display("[PASS] For %s, got: b'%0b/d'%0d/h'%0h", output_type, actual_value, actual_value, actual_value);
+            $display("[PASS] For %s, got: b'%0b/d'%0d/h'%0h",
+                     output_type,
+                     actual_value,
+                     actual_value,
+                     actual_value);
         end else begin
-            $display("[FAIL] expected: b'%0b/d'%0d/h'%0h, for %s,", expected_value, expected_value, expected_value, output_type);
-            $display("            got: b'%0b/d'%0d/h'%0h, for %s,", actual_value, actual_value, actual_value, output_type);
+            $display("[FAIL] expected: b'%0b/d'%0d/h'%0h, for %s,",
+                     expected_value,
+                     expected_value,
+                     expected_value,
+                     output_type);
+            $display("            got: b'%0b/d'%0d/h'%0h, for %s,",
+                     actual_value,
+                     actual_value,
+                     actual_value,
+                     output_type);
         end
     endtask
 
@@ -80,6 +92,8 @@ module KLP32V1_tb();
         check_result("Writeback", writeBack, 32'd5);
         check_result("RegWEn", RegWEn, 32'd1);
         #20;
+
+        $display("Test Summary: Passed %d out of %d tests.", num_passes, num_tests);
     end
 
 endmodule
