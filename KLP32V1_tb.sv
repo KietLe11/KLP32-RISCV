@@ -80,33 +80,6 @@ module KLP32V1_tb();
         check_result("Writeback", writeBack, 32'd5);
         check_result("RegWEn", RegWEn, 32'd1);
         #20;
-        // $display("Test 2: 00400793 // li    a5,4");
-        // check_result("Writeback", writeBack, 32'd4);
-        // check_result("RegWEn", RegWEn, 32'd1);
-        // #20;
-        // $display("Test 3: fef42623 // sw    a5,-20(s0)");
-        // check_result("regData2/MemWriteData", regData2, 32'd4);
-        // check_result("memRW", memRW, 1'd1);
-        // #20;
-        // $display("Test 4: 00a00793 // li    a5,10");
-        // check_result("Writeback", writeBack, 32'd10);
-        // check_result("RegWEn", RegWEn, 32'd1);
-        // #20;
-        // $display("Test 5: fef42623 // sw    a5,-24(s0)");
-        // check_result("regData2/MemWriteData", regData2, 32'd10);
-        // check_result("memRW", memRW, 1'd1);
-        // #20;
-        // $display("Test 6: fec42703 // lw    a4,-20(s0)");
-        // check_result("Writeback", writeBack, 32'd4);
-        // check_result("RegWEn", RegWEn, 32'd1);
-        // #20;
-        // $display("Test 7: fe842783 // lw    a5,-24(s0)");
-        // check_result("Writeback", writeBack, 32'd10);
-        // check_result("RegWEn", RegWEn, 32'd1);
-        // #20;
-        // $display("00f707b3 // add   a5,a4,a5");
-        // check_result("Writeback", writeBack, 32'd14);
-        // check_result("RegWEn", RegWEn, 32'd1);
     end
 
 endmodule
