@@ -109,7 +109,7 @@ module KLP32V1(clk,
                         .writeback(writeBack));
 
     // Output signals to debug interface
-    assign o_pcOut = pcOut;
+    assign o_pcOut = pc_inc_out;
     assign o_aluOut = aluOut;
     assign o_inst = inst;
     assign o_dataMemReadOut = dataMemReadOut;
