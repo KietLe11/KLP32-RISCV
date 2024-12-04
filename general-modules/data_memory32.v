@@ -19,12 +19,12 @@ module data_memory32 (clk, write_enable, addr, write_data, read_data);
     // 4 kilobytes has 10 bit addresses => addr[9:0]
     always @(posedge clk) begin
         if (write_enable)
-            memory_block[addr[9:0]] <= write_data;
+            memory_block[addr[11:2]] <= write_data;
     end
 
     // Combinational read: always output data at addr
     always @(*) begin
-        read_data = memory_block[addr[9:0]];
+        read_data = memory_block[addr[11:2]];
     end
 
 endmodule

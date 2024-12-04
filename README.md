@@ -3,26 +3,27 @@ By Kiet Le & Lawrence Prophete
 
 ## About
 This project implements a simple RISC-V processor for FPGAs. It supports the RV32I base instruction set and is designed for educational and experimental purposes.
-This projects was developed with Intel Quartus and Simulated on the DE10-Lite Board.
+This projects was developed for Intel Quartus and Simulated on the DE10-Lite Board. Although verilog/system verilog files should not have any restrictions to be used on another platform.
 
 ## Getting Started
 
 ### Prerequisites
-- Quartus Prime Lite Edition 20.1
+- Quartus Prime Lite Edition 20.1 or later
 - ModelSim or another simulator
 
 ### File Structure
       .
       ├── .github                 # Github Actions
       │   └── workflows
-      │   │   └── compile-pr.yml  # Pull Request Quartus Compiling Checker
+      │   │   └── pr.yml          # Pull Request Quartus Compiling Checker
       ├── alu-modules             # ALU Verilog Modules
       ├── general-modules         # Major Verilog modules (i.e., ALU, Register File, etc.)
       ├── misc-modules            # Miscellaneous Verilog modules (i.e., Muxes)
       ├── KLP32V1.qpf             # Quartus Project File
       ├── KLP32V1.qsf             # Quartus Settings File
-      ├── KLP32V1.sv              # Main processor file
-      ├── KLP32V1_tb.sv           # Main processor testbench file
+      ├── KLP32V1.sv              # KLP32V1 processor file
+      ├── KLP32V1_tb.sv           # KLP32V1 processor testbench file
+      ├── main.sv                 # Top level module
       └── README.md
 
 ## Microarchitecture
