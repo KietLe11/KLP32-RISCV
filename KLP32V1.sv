@@ -2,9 +2,13 @@ module KLP32V1(clk,
                reset,
                o_pcOut,
                o_aluOut,
+               o_aluSelect,
+               o_aluIn1,
+               o_aluIn2,
                o_inst,
                o_dataMemReadOut,
                o_writeBack,
+               o_wb_select,
                o_BrEq,
                o_BrLT,
                o_RegWEn,
@@ -17,9 +21,12 @@ module KLP32V1(clk,
 
     output logic [31:0] o_pcOut;
     output logic [31:0] o_aluOut;
+    output logic [3:0] o_aluSelect;
+    output logic [31:0] o_aluIn1, o_aluIn2;
     output logic [31:0] o_inst;
     output logic [31:0] o_dataMemReadOut;
     output logic [31:0] o_writeBack;
+    output logic [1:0] o_wb_select;
     output logic o_BrEq;
     output logic o_BrLT;
     output logic o_RegWEn;
@@ -111,9 +118,13 @@ module KLP32V1(clk,
     // Output signals to debug interface
     assign o_pcOut = pc_inc_out;
     assign o_aluOut = aluOut;
+    assign o_aluSelect = aluSel;
+    assign o_aluIn1 = aluInA;
+    assign o_aluIn2 = aluInB;
     assign o_inst = inst;
     assign o_dataMemReadOut = dataMemReadOut;
     assign o_writeBack = writeBack;
+    assign o_wb_select = wb_select;
     assign o_BrEq = BrEq;
     assign o_BrLT = BrLT;
     assign o_RegWEn = RegWEn;

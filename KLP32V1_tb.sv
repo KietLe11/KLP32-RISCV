@@ -5,9 +5,12 @@ module KLP32V1_tb();
 
     logic [31:0] pcOut;
     logic [31:0] aluOut;
+    logic [3:0] aluSelect;
+    logic [31:0] aluIn1, aluIn2;
     logic [31:0] inst;
     logic [31:0] dataMemReadOut;
     logic [31:0] writeBack;
+    logic [1:0] wb_select;
     logic BrEq;
     logic BrLT;
     logic RegWEn;
@@ -20,9 +23,13 @@ module KLP32V1_tb();
         .reset(reset),
         .o_pcOut(pcOut),
         .o_aluOut(aluOut),
+        .o_aluSelect(aluSelect),
+        .o_aluIn1(aluIn1),
+        .o_aluIn2(aluIn2),
         .o_inst(inst),
         .o_dataMemReadOut(dataMemReadOut),
         .o_writeBack(writeBack),
+        .o_wb_select(wb_select),
         .o_BrEq(BrEq),
         .o_BrLT(BrLT),
         .o_RegWEn(RegWEn),
@@ -88,8 +95,34 @@ module KLP32V1_tb();
         check_result("Writeback", writeBack, 32'd0);
         check_result("RegWEn", RegWEn, 32'd1);
         #20;
-        $display("Test 6: 00A7F033 // or    a6, a5, a0");
+        $display("Test 6: 00A7E833 // or    a6, a5, a0");
+        check_result("WBSelect", wb_select, 2'd1);
         check_result("Writeback", writeBack, 32'd5);
+        check_result("RegWEn", RegWEn, 32'd1);
+        #20;
+        $display("Test 7: 00A7C833 // xor   a6, a5, a0");
+        check_result("WBSelect", wb_select, 2'd1);
+        check_result("Writeback", writeBack, 32'd5);
+        check_result("RegWEn", RegWEn, 32'd1);
+        #20;
+        $display("Test 8: 00A79833 // sll   a6, a5, a0");
+        check_result("Writeback", writeBack, 32'd8);
+        check_result("RegWEn", RegWEn, 32'd1);
+        #20;
+        $display("Test 9: 00A7A833 // slt   a6, a5, a0");
+        check_result("Writeback", writeBack, 32'd0);
+        check_result("RegWEn", RegWEn, 32'd1);
+        #20;
+        $display("Test 10: 00A7B833 // sltu   a6, a5, a0");
+        check_result("Writeback", writeBack, 32'd0);
+        check_result("RegWEn", RegWEn, 32'd1);
+        #20;
+        $display("Test 11: 00A7D833 // srl   a6, a5, a0");
+        check_result("Writeback", writeBack, 32'd2);
+        check_result("RegWEn", RegWEn, 32'd1);
+        #20;
+        $display("Test 12: 40A7D833 // sra   a6, a5, a0");
+        check_result("Writeback", writeBack, 32'd2);
         check_result("RegWEn", RegWEn, 32'd1);
         #20;
 
