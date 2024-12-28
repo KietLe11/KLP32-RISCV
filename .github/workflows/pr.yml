@@ -26,7 +26,7 @@ jobs:
           wget -q https://downloads.intel.com/akdlm/software/acdsinst/20.1std.1/720/ib_installers/max10-20.1.1.720.qdz
 
           # Download Quartus Prime Lite installer
-          wget -q https://download.altera.com/akdlm/software/acdsinst/20.1std.1/720/ib_installers/QuartusLiteSetup-20.1.1.720-linux.run -O quartus_installer.run
+          wget -q https://downloads.intel.com/akdlm/software/acdsinst/20.1std.1/720/ib_installers/QuartusLiteSetup-20.1.1.720-linux.run -O quartus_installer.run
 
           # Make the installer executable
           chmod +x quartus_installer.run

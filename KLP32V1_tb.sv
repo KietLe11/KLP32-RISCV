@@ -76,6 +76,8 @@ module KLP32V1_tb();
         reset = 1;
         #10;
         reset = 0;
+
+        // Test R-type instructions
         $display("Test 1: NOP (No operation, encoded as ADDI x0, x0, 0)");
         check_result("ALU Out", aluOut, 32'b0);
         #20;
@@ -125,6 +127,17 @@ module KLP32V1_tb();
         check_result("Writeback", writeBack, 32'd2);
         check_result("RegWEn", RegWEn, 32'd1);
         #20;
+
+        // Test Set Load Store Operations
+        $display("Test 13:  // lui   x7, 0x76767");
+        check_result("Alu-in 2", aluIn2, 32'h76767000);
+        check_result("Writeback", writeBack, 32'h76767000);
+        check_result("RegWEn", RegWEn, 32'd1);
+        #20
+        $display("Test 14:  // lw   x7, 4(x7)");
+        check_result("Writeback", writeBack, 32'h76767004);
+        check_result("RegWEn", RegWEn, 32'd1);
+        #20
 
         $display("Test Summary: Passed %d out of %d tests.", num_passes, num_tests);
     end

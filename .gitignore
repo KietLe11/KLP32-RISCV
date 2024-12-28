@@ -2,5 +2,6 @@ incremental_db/
 simulation/
 output_files/
 db/
+*.qdf
 *.qws
 *_nativelink_simulation.rpt
