@@ -65,7 +65,7 @@ module control (instr,BrLT, BrEq, RegWEn, ImmSel, ALUsrc1,
                 alucontrol = 4'b0000;
             end
             7'b0110111 : begin
-                controls = 14'b1_000_0_1_x_0_xxx_10_0; // LUI OPERATIONS
+                controls = 14'b1_101_0_1_x_0_xxx_01_0; // LUI OPERATIONS
                 alucontrol = 4'b1111;
             end
             7'b0010111 : begin

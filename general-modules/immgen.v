@@ -24,6 +24,9 @@ module immgen(instr, imm_sel, imm_extended);
             // J-Type Immediate extension
             3'b100:  imm_extend = {{12{instr[31]}}, instr[19:12], instr[20], instr[30:25], instr[24:21], 1'b0};
 
+            // LUI Operation
+            3'b101:  imm_extend = {{instr[31:12]}, 12'b0};
+
             // Default case for undefined imm_sel
             default:  imm_extend = 32'bx;
         endcase
