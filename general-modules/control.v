@@ -34,26 +34,40 @@ module control (instr,BrLT, BrEq, RegWEn, ImmSel, ALUsrc1,
                 else
                     alucontrol = {1'b0,instr[14:12]};
             end
-            7'b0100011 : begin
-                controls = 14'b0_001_0_1_x_1_xxx_01_0; // S-TYPE OPERATIONS
+            7'b0100011 : begin // S-TYPE OPERATIONS
+                /*
+                    funct3 map:
+                        000 - SB
+                        001 - SH
+                        010 - SW
+                */
+                controls = {1'b0, 3'b001, 1'b0, 1'b1 ,1'bx, 1'b1, funct3, 2'b01, 1'b0};
                 alucontrol = 4'b0000;
             end
             7'b1100011 : begin
                 alucontrol = 4'b0000;
                 if(funct3 == 001 & !BrEq) // BNE
                     branch_pcSel = 1'b1;
-                else if((funct3 == 100 || funct3 == 110)& BrLT) //BLTU and BLT
+                else if((funct3 == 100 || funct3 == 110)& BrLT) // BLTU and BLT
                     branch_pcSel = 1'b1;
-                else if(funct3 == 000 & BrEq) //BEQ
+                else if(funct3 == 000 & BrEq) // BEQ
                     branch_pcSel = 1'b1;
-                else if((funct3 == 101 || funct3 == 111) & !BrLT)  //BGE and BGEU
+                else if((funct3 == 101 || funct3 == 111) & !BrLT)  // BGE and BGEU
                     branch_pcSel = 1'b0;
                 else
                     branch_pcSel = 0;
                 controls = {1'b0, 3'b010, 1'b1, 1'b1 ,1'bx, 1'b0, 3'bxxx, 2'b01, branch_pcSel};
             end
-            7'b0000011 : begin
-                controls = 14'b1_000_0_1_x_0_xxx_00_0; // LOAD OPERATIONS
+            7'b0000011 : begin // LOAD OPERATIONS
+                /*
+                    funct3 map:
+                        000 - LB
+                        001 - LH
+                        010 - LW
+                        100 - LBU
+                        101 - LHU
+                */
+                controls = {1'b0, 3'b000, 1'b0, 1'b1 ,1'bx, 1'b0, funct3, 2'b00, 1'b0};
                 alucontrol = 4'b0000;
             end
             7'b1101111 : begin
