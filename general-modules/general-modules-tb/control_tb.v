@@ -9,7 +9,7 @@ module control_tb;
     reg BrEq, BrLT;
 
     // Outputs from the DUT
-    wire [2:0] ldU;
+    wire [2:0] LoadStoreMode;
     wire RegWEn, ALUsrc1, ALUsrc2, BrUn, MemRw, PCSel;
     wire [2:0] ImmSel;
     wire [3:0] AluSEL;
@@ -27,7 +27,7 @@ module control_tb;
         .AluSEL(AluSEL),
         .BrUn(BrUn),
         .MemRw(MemRw),
-        .ldU(ldU),
+        .LoadStoreMode(LoadStoreMode),
         .WBSel(WBSel),
         .PCSel(PCSel)
     );
@@ -43,13 +43,13 @@ module control_tb;
         input [3:0] expected_alucontrol;
         begin
             if ({RegWEn, ImmSel, ALUsrc1, ALUsrc2, BrUn,
-                 MemRw, ldU, WBSel, PCSel} !== expected_controls ||
+                 MemRw, LoadStoreMode, WBSel, PCSel} !== expected_controls ||
                 AluSEL !== expected_alucontrol) begin
                 $display("%-8s: FAILED for instr = %b", test_name, instr);
                 $display("  Expected: controls = %b, alucontrol = %b",
                             expected_controls, expected_alucontrol);
                 $display("  Got: controls = %b, alucontrol = %b",
-                        {RegWEn, ImmSel, ALUsrc1, ALUsrc2, BrUn, MemRw, ldU, WBSel, PCSel}, AluSEL);
+                        {RegWEn, ImmSel, ALUsrc1, ALUsrc2, BrUn, MemRw, LoadStoreMode, WBSel, PCSel}, AluSEL);
             end else begin
                 $display("%-8s: PASSED for instr = %b", test_name, instr);
             end
@@ -72,11 +72,11 @@ module control_tb;
 
         // Test S-Type instruction (opcode = 0100011)
         instr = 32'b000000000000_00000_000_00000_0100011; // Example S-type instruction
-        #15 check_output("Test S-Type", 14'b0_001_0_1_x_1_xxx_01_0, 4'b0000);
+        #15 check_output("Test S-Type", 14'b0_001_0_1_x_1_000_01_0, 4'b0000);
 
         // Test BEQ (opcode = 1100011, funct3 = 000)
         instr = 32'b000000000000_00000_000_00000_1100011; // BEQ instruction
-        BrEq = 0; BrLT = 0;
+        BrEq = 1; BrLT = 0;
         #15 check_output("Test BEQ", 14'b0_010_1_1_x_0_xxx_01_1, 4'b0000);
 
         // Test BNE (opcode = 1100011, funct3 = 001)
@@ -95,7 +95,7 @@ module control_tb;
 
         // Test LUI (opcode = 0110111)
         instr = 32'b000000000000_00000_000_00000_0110111; // LUI instruction
-        #15 check_output("Test LUI", 14'b1_000_0_1_x_0_xxx_10_0, 4'b1111);
+        #15 check_output("Test LUI", 14'b1_101_0_1_x_0_xxx_01_0, 4'b1111);
 
     end
 endmodule

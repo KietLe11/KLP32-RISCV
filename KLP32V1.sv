@@ -40,7 +40,7 @@ module KLP32V1(clk,
 
     // Control
     logic RegWEn, ALUsrc1, ALUsrc2, BrUn, memRW, PCSel, BrEq, BrLT;
-    logic [2:0] ldU;
+    logic [2:0] LoadStoreMode;
     logic [2:0] immSel;
     logic [3:0] aluSel;
     logic [1:0] wb_select;
@@ -54,7 +54,7 @@ module KLP32V1(clk,
                        .AluSEL(aluSel),
                        .BrUn(BrUn),
                        .MemRw(memRW),
-                       .ldU(ldU),
+                       .LoadStoreMode(LoadStoreMode),
                        .WBSel(wb_select),
                        .PCSel(PCSel));
 
@@ -106,6 +106,7 @@ module KLP32V1(clk,
                           .write_enable(memRW),
                           .addr(aluOut),
                           .write_data(regData2),
+                          .loadStoreMode(LoadStoreMode),
                           .read_data(dataMemReadOut));
 
     // Write Back MUX for Register File

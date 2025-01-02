@@ -1,11 +1,11 @@
-module control (instr,BrLT, BrEq, RegWEn, ImmSel, ALUsrc1,
-                ALUsrc2, AluSEL, BrUn, MemRw, ldU,WBSel, PCSel);
+module control (instr, BrLT, BrEq, RegWEn, ImmSel, ALUsrc1,
+                ALUsrc2, AluSEL, BrUn, MemRw, LoadStoreMode, WBSel, PCSel);
 
     parameter integer n = 32;
     input [n-1:0] instr;
     input BrEq, BrLT;
 
-    output [2:0] ldU;
+    output [2:0] LoadStoreMode;
     output RegWEn, ALUsrc1, ALUsrc2, BrUn, MemRw, PCSel;
     output [2:0] ImmSel;
     output [3:0] AluSEL;
@@ -16,7 +16,7 @@ module control (instr,BrLT, BrEq, RegWEn, ImmSel, ALUsrc1,
     reg [13:0] controls;
     reg [3:0] alucontrol;
     assign {AluSEL} = alucontrol;
-    assign {RegWEn,ImmSel,ALUsrc1, ALUsrc2, BrUn, MemRw, ldU, WBSel, PCSel} = controls;
+    assign {RegWEn, ImmSel, ALUsrc1, ALUsrc2, BrUn, MemRw, LoadStoreMode, WBSel, PCSel} = controls;
 
     always @(*) begin
         funct3 = instr[14:12];
@@ -52,7 +52,7 @@ module control (instr,BrLT, BrEq, RegWEn, ImmSel, ALUsrc1,
                     branch_pcSel = 1'b1;
                 else if(funct3 == 000 & BrEq) // BEQ
                     branch_pcSel = 1'b1;
-                else if((funct3 == 101 || funct3 == 111) & !BrLT)  // BGE and BGEU
+                else if((funct3 == 101 || funct3 == 111) & !BrLT) // BGE and BGEU
                     branch_pcSel = 1'b0;
                 else
                     branch_pcSel = 0;
@@ -67,7 +67,7 @@ module control (instr,BrLT, BrEq, RegWEn, ImmSel, ALUsrc1,
                         100 - LBU
                         101 - LHU
                 */
-                controls = {1'b0, 3'b000, 1'b0, 1'b1 ,1'bx, 1'b0, funct3, 2'b00, 1'b0};
+                controls = {1'b1, 3'b000, 1'b0, 1'b1 ,1'bx, 1'b0, funct3, 2'b00, 1'b0};
                 alucontrol = 4'b0000;
             end
             7'b1101111 : begin

@@ -129,14 +129,30 @@ module KLP32V1_tb();
         #20;
 
         // Test Set Load Store Operations
-        $display("Test 13:  // lui   x7, 0x76767");
-        check_result("Alu-in 2", aluIn2, 32'h76767000);
-        check_result("Writeback", writeBack, 32'h76767000);
+        $display("Test 13: lui   x7, 0x76");
+        check_result("Writeback", writeBack, 32'h4C000);
         check_result("RegWEn", RegWEn, 32'd1);
         #20
-        $display("Test 14:  // lw   x7, 4(x7)");
-        check_result("Writeback", writeBack, 32'h76767004);
+        $display("Test 14: sw    x16, 6(x16)");
+        check_result("Alu-in 1", aluIn1, 32'd2);
+        check_result("Alu-in 2", aluIn2, 32'd6);
+        check_result("ALU Out", aluOut, 32'd8);
+        check_result("regData2", regData2, 32'd2);
+        check_result("memRW", memRW, 1'b1);
+        #20
+        $display("Test 15: lw    x8, 6(x16)");
+        check_result("ALU Out", aluOut, 32'h8);
+        check_result("wb_select", wb_select, 32'd0);
+        check_result("Writeback", writeBack, 32'h2);
         check_result("RegWEn", RegWEn, 32'd1);
+        #20
+        $display("Test 16: sb    x8, 6(x16)");
+        check_result("Alu-in 1", aluIn1, 32'd2);
+        check_result("Alu-in 2", aluIn2, 32'd6);
+        check_result("ALU Out", aluOut, 32'h8);
+        check_result("regData2", regData2, 32'd2);
+        check_result("memRW", memRW, 1'b1);
+        check_result("RegWEn", RegWEn, 32'd0);
         #20
 
         $display("Test Summary: Passed %d out of %d tests.", num_passes, num_tests);

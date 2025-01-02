@@ -1,10 +1,10 @@
-module data_memory32 (clk, write_enable, addr, write_data, dataControl, read_data);
+module data_memory32 (clk, write_enable, addr, write_data, loadStoreMode, read_data);
 
     parameter integer n = 32;
     input clk;
     input write_enable;
     input [n-1:0] addr, write_data;
-    input [2:0] dataControl;
+    input [2:0] loadStoreMode;
     output reg [n-1:0] read_data;
 
     // Byte Addressed Memory
@@ -31,28 +31,28 @@ module data_memory32 (clk, write_enable, addr, write_data, dataControl, read_dat
                         memory_block[addr+2],
                         memory_block[addr+3]};
 
-    wire usigned;
-    assign usigned = dataControl[2];
+    wire sign_extend;
+    assign sign_extend = ~loadStoreMode[2];
 
     wire [31:0] byteDataExtended, halfWordDataExtended;
     halfWordExtend HWE(.halfWord(halfWordData),
-                        .usigned(usigned),
-                        .byteExtend(halfWordDataExtended));
+                        .sign_extend(sign_extend),
+                        .halfWordExtended(halfWordDataExtended));
     byteExtend BE(.byte(byteData),
-                    .usigned(usigned),
-                    .byteExtend(byteDataExtended));
+                    .sign_extend(sign_extend),
+                    .byteExtended(byteDataExtended));
 
-    wire [31:0] targetData;
+    reg [31:0] targetData;
 
     always @(*) begin
-        case (dataControl)
-            3'000 : begin // LB and LBU
+        case (loadStoreMode[1:0])
+            2'b00 : begin // LB and LBU
                 targetData = byteDataExtended;
             end
-            3'001 : begin // LH and LHU
+            2'b01 : begin // LH and LHU
                 targetData = halfWordDataExtended;
             end
-            3'010 : begin // LW
+            2'b10 : begin // LW
                 targetData = wordData;
             end
         endcase
@@ -67,15 +67,15 @@ module data_memory32 (clk, write_enable, addr, write_data, dataControl, read_dat
 
     always @(posedge clk) begin
         if (write_enable) begin
-            case (dataControl)
-                3'000: begin // SB
+            case (loadStoreMode[1:0])
+                2'b00: begin // SB
                     memory_block[addr] <= write_data[7:0];
                 end
-                3'001: begin // SH
+                2'b01: begin // SH
                     memory_block[addr] <= write_data[15:8];
                     memory_block[addr+1] <= write_data[7:0];
                 end
-                3'010: begin // SW
+                2'b10: begin // SW
                     memory_block[addr] <= write_data[31:24];
                     memory_block[addr+1] <= write_data[23:16];
                     memory_block[addr+2] <= write_data[15:8];
@@ -88,35 +88,47 @@ module data_memory32 (clk, write_enable, addr, write_data, dataControl, read_dat
 endmodule
 
 module halfWordExtend (
-        input [15:0] halfWord,
-        input usigned,
-        output [31:0] halfWordExtend
-    );
+    input [15:0] halfWord,
+    input sign_extend,
+    output [31:0] halfWordExtended
+);
+
+    reg [31:0] result;
 
     always @(*) begin
-        case (usigned)
-            1'0 :
-                halfWordExtend = {16{1'b1}, halfWord};
-            1'1 :
-                halfWordExtend = {16{1'b0}, halfWord};
+        case (sign_extend)
+            1'b0 : begin
+                result = {{16{1'b0}}, halfWord};
+            end
+            1'b1 : begin
+                result = {{16{1'b1}}, halfWord};
+            end
         endcase
     end
+
+    assign halfWordExtended = result;
 
 endmodule
 
 module byteExtend (
         input [7:0] byte,
-        input usigned,
-        output [31:0] byteExtend
+        input sign_extend,
+        output [31:0] byteExtended
     );
 
+    reg [31:0] result;
+
     always @(*) begin
-        case (usigned)
-            1'0 :
-                byteExtend = {24{1'b1}, byte};
-            1'1 :
-                byteExtend = {24{1'b0}, byte};
+        case (sign_extend)
+            1'b0 : begin
+                result = {{24{1'b0}}, byte};
+            end
+            1'b1 : begin
+                result = {{24{1'b1}}, byte};
+            end
         endcase
     end
+
+    assign byteExtended = result;
 
 endmodule
