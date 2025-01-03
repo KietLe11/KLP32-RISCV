@@ -5,7 +5,7 @@ module control_tb1();
     reg [n-1:0] instr;
     wire BrUn, MemRw, RegWEn, PCSel, ALUsrc1, ALUsrc2;
     wire [3:0] AluSEL;
-    wire [2:0] ImmSel, ldU;
+    wire [2:0] ImmSel, LoadStoreMode;
     wire [1:0] WBSel;
 
     control uut(
@@ -18,7 +18,7 @@ module control_tb1();
         .ALUsrc2(ALUsrc2),
         .BrUn(BrUn),
         .MemRw(MemRw),
-        .ldU(ldU),
+        .LoadStoreMode(LoadStoreMode),
         .WBSel(WBSel),
         .instr(instr),
         .PCSel(PCSel)
@@ -50,7 +50,7 @@ module control_tb1();
         if (AluSEL != 4'b0000)
             $display("Error with the AluSEL, Expected: 0000");
 
-        $display("Expected Results: RegWEn: 1, ImmSel: 000, ALUsrc1: 0, ALUsrc2: 1, BrUn: X, MemRw: 0(read), ldU: xxx, WBSel: 01, PCSel: 0, AluSEL: 0000");
+        $display("Expected Results: RegWEn: 1, ImmSel: 000, ALUsrc1: 0, ALUsrc2: 1, BrUn: X, MemRw: 0(read), LoadStoreMode: xxx, WBSel: 01, PCSel: 0, AluSEL: 0000");
 
         #10;
 
