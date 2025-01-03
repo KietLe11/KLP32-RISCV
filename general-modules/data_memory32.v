@@ -96,14 +96,11 @@ module halfWordExtend (
     reg [31:0] result;
 
     always @(*) begin
-        case (sign_extend)
-            1'b0 : begin
-                result = {{16{1'b0}}, halfWord};
-            end
-            1'b1 : begin
-                result = {{16{1'b1}}, halfWord};
-            end
-        endcase
+        if (sign_extend && halfWord[15]) begin
+            result = {{16{1'b1}}, halfWord};
+        end else begin
+            result = {{16{1'b0}}, halfWord};
+        end
     end
 
     assign halfWordExtended = result;
@@ -119,14 +116,11 @@ module byteExtend (
     reg [31:0] result;
 
     always @(*) begin
-        case (sign_extend)
-            1'b0 : begin
-                result = {{24{1'b0}}, byte};
-            end
-            1'b1 : begin
-                result = {{24{1'b1}}, byte};
-            end
-        endcase
+        if (sign_extend && byte[7]) begin
+            result = {{24{1'b1}}, byte};
+        end else begin
+            result = {{24{1'b0}}, byte};
+        end
     end
 
     assign byteExtended = result;

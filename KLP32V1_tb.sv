@@ -154,6 +154,10 @@ module KLP32V1_tb();
         check_result("memRW", memRW, 1'b1);
         check_result("RegWEn", RegWEn, 32'd0);
         #20
+        $display("Test 17: lb    x9, 6(x16)");
+        check_result("Writeback", writeBack, 32'h2);
+        check_result("RegWEn", RegWEn, 32'd1);
+        #20
 
         $display("Test Summary: Passed %d out of %d tests.", num_passes, num_tests);
     end

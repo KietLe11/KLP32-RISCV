@@ -42,6 +42,7 @@ module byteExtend_tb();
             $display("[PASS] Test Case 2: Signed Extend");
         end else begin
             $display("[FAIL] Test Case 2: Signed Extend");
+            $display("Got %b", byteExtended);
         end
 
     end
