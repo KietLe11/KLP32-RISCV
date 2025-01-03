@@ -166,7 +166,7 @@ module KLP32V1_tb();
         check_result("memRW", memRW, 1'b1);
         check_result("RegWEn", RegWEn, 32'd0);
         #20
-        $display("Test 19: lh    x10, 38(x16)");
+        $display("Test 19: lh    x9, 38(x16)");
         check_result("Writeback", writeBack, 32'h2);
         check_result("RegWEn", RegWEn, 32'd1);
         #20
@@ -174,10 +174,29 @@ module KLP32V1_tb();
         check_result("Writeback", writeBack, 32'h2);
         check_result("RegWEn", RegWEn, 32'd1);
         #20
-        $display("Test 21: lhu   x10, 38(x16)");
+        $display("Test 21: lhu   x9, 38(x16)");
         check_result("Writeback", writeBack, 32'h2);
         check_result("RegWEn", RegWEn, 32'd1);
         #20
+
+        // Test Immediate Type Instructions
+        $display("Test 22: addi  x11, x0, 76");
+        check_result("Writeback", writeBack, 32'd76);
+        check_result("RegWEn", RegWEn, 32'd1);
+        #20
+        $display("Test 23: addi  x12, x11, d-22");
+        check_result("Alu-in 1", aluIn1, 32'd76);
+        check_result("Alu-in 2", aluIn2, -32'd22);
+        check_result("Writeback", writeBack, 32'd54);
+        check_result("RegWEn", RegWEn, 32'd1);
+        #20
+        $display("Test 24: slti x12, x11, d1000");
+        check_result("Writeback", writeBack, 32'd1);
+        check_result("RegWEn", RegWEn, 32'd1);
+        #20
+        $display("Test 25: slti x12, x11, d10");
+        check_result("Writeback", writeBack, 32'd0);
+        check_result("RegWEn", RegWEn, 32'd1);
 
         $display("Test Summary: Passed %d out of %d tests.", num_passes, num_tests);
     end
