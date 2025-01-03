@@ -16,14 +16,18 @@ This projects was developed for Intel Quartus and Simulated on the DE10-Lite Boa
       ├── .github                 # Github Actions
       │   └── workflows
       │   │   └── pr.yml          # Pull Request Quartus Compiling Checker
-      ├── alu-modules             # ALU Verilog Modules
-      ├── general-modules         # Major Verilog modules (i.e., ALU, Register File, etc.)
-      ├── misc-modules            # Miscellaneous Verilog modules (i.e., Muxes)
-      ├── KLP32V1.qpf             # Quartus Project File
-      ├── KLP32V1.qsf             # Quartus Settings File
-      ├── KLP32V1.sv              # KLP32V1 processor file
-      ├── KLP32V1_tb.sv           # KLP32V1 processor testbench file
-      ├── main.sv                 # Top level module
+      ├── quartus
+      |   ├── KLP32V1.qpf         # Quartus Project File
+      |   └── KLP32V1.qsf         # Quartus Settings File
+      ├── rtl                     # SystemVerilog/Verilog Files
+      │   ├── alu-modules         # ALU Verilog Modules
+      │   ├── general-modules     # Major Verilog modules (i.e., ALU, Register File, etc.)
+      │   ├── misc-modules        # Miscellaneous Verilog modules (i.e., Muxes)
+      |   ├── KLP32V1.sv          # KLP32V1 processor file
+      |   ├── KLP32V1_tb.sv       # KLP32V1 processor testbench file
+      |   └── main.sv             # Top level module
+      ├── .gitignore
+      ├── LICENSE
       └── README.md
 
 ## Microarchitecture
