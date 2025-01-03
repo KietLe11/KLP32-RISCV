@@ -158,6 +158,26 @@ module KLP32V1_tb();
         check_result("Writeback", writeBack, 32'h2);
         check_result("RegWEn", RegWEn, 32'd1);
         #20
+        $display("Test 18: sh    x9, 38(x16)");
+        check_result("Alu-in 1", aluIn1, 32'd2);
+        check_result("Alu-in 2", aluIn2, 32'd38);
+        check_result("ALU Out", aluOut, 32'd40);
+        check_result("regData2", regData2, 32'd2);
+        check_result("memRW", memRW, 1'b1);
+        check_result("RegWEn", RegWEn, 32'd0);
+        #20
+        $display("Test 19: lh    x10, 38(x16)");
+        check_result("Writeback", writeBack, 32'h2);
+        check_result("RegWEn", RegWEn, 32'd1);
+        #20
+        $display("Test 20: lbu   x9, 6(x16)");
+        check_result("Writeback", writeBack, 32'h2);
+        check_result("RegWEn", RegWEn, 32'd1);
+        #20
+        $display("Test 21: lhu   x10, 38(x16)");
+        check_result("Writeback", writeBack, 32'h2);
+        check_result("RegWEn", RegWEn, 32'd1);
+        #20
 
         $display("Test Summary: Passed %d out of %d tests.", num_passes, num_tests);
     end
