@@ -49,7 +49,8 @@ module control_tb;
                 $display("  Expected: controls = %b, alucontrol = %b",
                             expected_controls, expected_alucontrol);
                 $display("  Got: controls = %b, alucontrol = %b",
-                        {RegWEn, ImmSel, ALUsrc1, ALUsrc2, BrUn, MemRw, LoadStoreMode, WBSel, PCSel}, AluSEL);
+                        {RegWEn, ImmSel, ALUsrc1, ALUsrc2, BrUn, MemRw,
+                        LoadStoreMode, WBSel, PCSel}, AluSEL);
             end else begin
                 $display("%-8s: PASSED for instr = %b", test_name, instr);
             end
