@@ -197,6 +197,31 @@ module KLP32V1_tb();
         $display("Test 25: slti x12, x11, d10");
         check_result("Writeback", writeBack, 32'd0);
         check_result("RegWEn", RegWEn, 32'd1);
+        #20
+        $display("Test 26: sltiu x14, x11, d1000");
+        check_result("Writeback", writeBack, 32'd1);
+        check_result("RegWEn", RegWEn, 32'd1);
+        #20
+        $display("Test 27: sltiu x14, x11, -d22");
+        check_result("Writeback", writeBack, 32'd1);
+        check_result("RegWEn", RegWEn, 32'd1);
+        #20
+        $display("Test 28: xori  x15, x11, d89");
+        check_result("Writeback", writeBack, 32'h15);
+        check_result("RegWEn", RegWEn, 32'd1);
+        #20
+        $display("Test 29: ori   x16, x11, d89");
+        check_result("Writeback", writeBack, 32'd93);
+        check_result("RegWEn", RegWEn, 32'd1);
+        #20
+        $display("Test 30: and   x17, x11, d89");
+        check_result("Writeback", writeBack, 32'd72);
+        check_result("RegWEn", RegWEn, 32'd1);
+        #20
+        $display("Test 31: slli  x18, x11, d5");
+        check_result("Writeback", writeBack, 32'd2432);
+        check_result("RegWEn", RegWEn, 32'd1);
+        #20
 
         $display("Test Summary: Passed %d out of %d tests.", num_passes, num_tests);
     end
