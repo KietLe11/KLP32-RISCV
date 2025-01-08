@@ -27,12 +27,17 @@ module control (instr, BrLT, BrEq, RegWEn, ImmSel, ALUsrc1,
                 controls = 14'b1_xxx_0_0_x_0_xxx_01_0; // R-TYPE OPERATIONS
                 alucontrol = {instr[30],instr[14:12]};
             end
-            7'b0010011 : begin
-                controls = 14'b1_000_0_1_x_0_xxx_01_0; // I-TYPE OPERATIONS
-                if (funct3 == 101)
-                    alucontrol = {instr[30],instr[14:12]};
-                else
-                    alucontrol = {1'b0,instr[14:12]};
+            7'b0010011 : begin // I-TYPE OPERATIONS
+                case (funct3)
+                    3'b101 : begin
+                        controls = 14'b1_111_0_1_x_0_xxx_01_0;
+                        alucontrol = {instr[30],instr[14:12]};
+                    end
+                    default : begin
+                        controls = 14'b1_000_0_1_x_0_xxx_01_0;
+                        alucontrol = {1'b0,instr[14:12]};
+                    end
+                endcase
             end
             7'b0100011 : begin // S-TYPE OPERATIONS
                 /*
