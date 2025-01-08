@@ -232,7 +232,7 @@ module KLP32V1_tb();
         check_result("Writeback", writeBack, 32'd38);
         check_result("RegWEn", RegWEn, 32'd1);
         #20
-        $display("Test 34: addi  x20, x0, -d10"); // Put -10 in register x19
+        $display("Test 34: addi  x20, x0, -d10"); // Put -10 in register x20
         check_result("Writeback", writeBack, -32'd10);
         check_result("RegWEn", RegWEn, 32'd1);
         #20
