@@ -12,6 +12,9 @@ module immgen(instr, imm_sel, imm_extended);
             // I-Type Immediate extension
             3'b000: imm_extend = {{21{instr[31]}}, instr[30:20]};
 
+            // I-Type Immediate Shift Extension: SLLI, SRLI, SRAI
+            3'b111: imm_extend = {27'b0, instr[24:20]};
+
             // S-Type Immediate extension
             3'b001: imm_extend = {{21{instr[31]}}, instr[30:25], instr[11:7]};
 
