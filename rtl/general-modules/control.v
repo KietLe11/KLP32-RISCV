@@ -76,11 +76,11 @@ module control (instr, BrLT, BrEq, RegWEn, ImmSel, ALUsrc1,
                 alucontrol = 4'b0000;
             end
             7'b1101111 : begin
-                controls = 14'b1_000_0_1_x_0_xxx_01_0; // JAL OPERATIONS
+                controls = 14'b1_100_1_1_x_0_xxx_10_1; // JAL OPERATIONS
                 alucontrol = 4'b0000;
             end
             7'b1100111 : begin
-                controls = 14'b1_000_0_1_x_0_xxx_01_0; // JALR OPERATIONS
+                controls = 14'b1_000_0_1_x_0_xxx_10_1; // JALR OPERATIONS
                 alucontrol = 4'b0000;
             end
             7'b0110111 : begin
@@ -88,7 +88,7 @@ module control (instr, BrLT, BrEq, RegWEn, ImmSel, ALUsrc1,
                 alucontrol = 4'b1111;
             end
             7'b0010111 : begin
-                controls = 14'b1_000_1_1_x_0_xxx_10_0; // AUIPC
+                controls = 14'b1_101_1_1_x_0_xxx_01_0; // AUIPC
                 alucontrol = 4'b0000;
             end
             default: begin

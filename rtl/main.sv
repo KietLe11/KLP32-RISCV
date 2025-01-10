@@ -16,6 +16,7 @@ module main (clk, reset_in);
     logic [31:0] dataMemReadOut;
     logic [31:0] writeBack;
     logic [1:0] wb_select;
+    logic PCSel;
     logic BrEq;
     logic BrLT;
     logic RegWEn;
@@ -27,6 +28,7 @@ module main (clk, reset_in);
         .clk(second_clk),
         .reset(reset),
         .o_pcOut(pcOut),
+        .o_PCSel(PCSel),
         .o_aluOut(aluOut),
         .o_aluSelect(aluSelect),
         .o_aluIn1(aluIn1),

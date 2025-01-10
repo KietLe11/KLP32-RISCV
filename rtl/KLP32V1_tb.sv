@@ -11,6 +11,7 @@ module KLP32V1_tb();
     logic [31:0] dataMemReadOut;
     logic [31:0] writeBack;
     logic [1:0] wb_select;
+    logic PCSel;
     logic BrEq;
     logic BrLT;
     logic RegWEn;
@@ -22,6 +23,7 @@ module KLP32V1_tb();
         .clk(clk),
         .reset(reset),
         .o_pcOut(pcOut),
+        .o_PCSel(PCSel),
         .o_aluOut(aluOut),
         .o_aluSelect(aluSelect),
         .o_aluIn1(aluIn1),
@@ -239,6 +241,42 @@ module KLP32V1_tb();
         $display("Test 35: srai  x21, x20, -d10");
         check_result("Writeback", writeBack, -32'd5);
         check_result("RegWEn", RegWEn, 32'd1);
+        #20
+
+        // AUIPC
+        $display("Test 36: auipc x22, d100");
+        check_result("Alu-in 1", aluIn1, pcOut);
+        check_result("Alu-in 2", aluIn2, 32'd409600);
+        check_result("Writeback", writeBack, pcOut + 32'd409600);
+        check_result("RegWEn", RegWEn, 32'd1);
+        #20
+        $display("Test 37: auipc x22, d0");
+        check_result("Alu-in 1", aluIn1, pcOut);
+        check_result("Alu-in 2", aluIn2, 32'd0);
+        check_result("Writeback", writeBack, pcOut + 32'd0);
+        check_result("RegWEn", RegWEn, 32'd1);
+        #20
+
+        // JAL and JALR
+        $display("Test 38: jalr  x1, x1, d8");
+        $display("Current pcOut: %d", pcOut);
+        check_result("Alu-in 1", aluIn1, pcOut - 32'd4);
+        check_result("Alu-in 2", aluIn2, 32'd8);
+        check_result("ALU Out", aluOut, pcOut + 32'd4);
+        check_result("Writeback", writeBack, pcOut + 32'd4);
+        check_result("wb_select", wb_select, 32'd2);
+        check_result("RegWEn", RegWEn, 32'd1);
+        check_result("PCSel", PCSel, 32'd1);
+        #20
+        $display("Test 37: jal   x1, -d128");
+        $display("Current pcOut: %d", pcOut);
+        check_result("Alu-in 1", aluIn1, pcOut);
+        check_result("Alu-in 2", aluIn2, 32'd4);
+        check_result("ALU Out", aluOut, pcOut + 32'd4);
+        check_result("Writeback", writeBack, pcOut + 32'd4);
+        check_result("RegWEn", RegWEn, 32'd1);
+        check_result("PCSel", PCSel, 32'd1);
+        #20
 
         $display("Test Summary: Passed %d out of %d tests.", num_passes, num_tests);
     end

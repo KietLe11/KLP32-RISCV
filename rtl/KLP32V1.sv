@@ -1,6 +1,7 @@
 module KLP32V1(clk,
                reset,
                o_pcOut,
+               o_PCSel,
                o_aluOut,
                o_aluSelect,
                o_aluIn1,
@@ -27,6 +28,7 @@ module KLP32V1(clk,
     output logic [31:0] o_dataMemReadOut;
     output logic [31:0] o_writeBack;
     output logic [1:0] o_wb_select;
+    output logic o_PCSel;
     output logic o_BrEq;
     output logic o_BrLT;
     output logic o_RegWEn;
@@ -117,7 +119,8 @@ module KLP32V1(clk,
                         .writeback(writeBack));
 
     // Output signals to debug interface
-    assign o_pcOut = pc_inc_out;
+    assign o_pcOut = pcOut;
+    assign o_PCSel = PCSel;
     assign o_aluOut = aluOut;
     assign o_aluSelect = aluSel;
     assign o_aluIn1 = aluInA;
