@@ -32,7 +32,11 @@ module immgen(instr, imm_sel, imm_extended);
              * instr[20] -> 11
              * instr[19:12] -> 19:12
              */
-            3'b100:  imm_extend = {{12{instr[31]}}, instr[31], instr[19:12], instr[20], instr[30:21]};
+            3'b100:  imm_extend = {{12{instr[31]}},
+                                    instr[31],
+                                    instr[19:12],
+                                    instr[20],
+                                    instr[30:21]};
 
             // LUI Operation
             3'b101:  imm_extend = {{instr[31:12]}, 12'b0};
