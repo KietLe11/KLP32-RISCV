@@ -268,7 +268,7 @@ module KLP32V1_tb();
         check_result("RegWEn", RegWEn, 32'd1);
         check_result("PCSel", PCSel, 32'd1);
         #20
-        $display("Test 37: jal   x1, -d128");
+        $display("Test 39: jal   x1, -d128");
         $display("Current pcOut: %d", pcOut);
         check_result("Alu-in 1", aluIn1, pcOut);
         check_result("Alu-in 2", aluIn2, 32'd4);
@@ -276,6 +276,123 @@ module KLP32V1_tb();
         check_result("Writeback", writeBack, pcOut + 32'd4);
         check_result("RegWEn", RegWEn, 32'd1);
         check_result("PCSel", PCSel, 32'd1);
+        #20
+
+        // Branching Instructions
+        $display("Test 40: beq   x11, x12, d0");
+        check_result("Alu-in 1", aluIn1, pcOut);
+        check_result("Alu-in 2", aluIn2, 32'd4);
+        check_result("ALU Out", aluOut, pcOut + 32'd4);
+        check_result("RegWEn", RegWEn, 32'd0);
+        check_result("PCSel", PCSel, 32'd0);
+        check_result("regData1", regData1, 32'd76);
+        check_result("regData2", regData2, 32'd54);
+        #20
+        $display("Test 41: beq x12, x11, d0");
+        check_result("Alu-in 1", aluIn1, pcOut);
+        check_result("Alu-in 2", aluIn2, 32'd4);
+        check_result("ALU Out", aluOut, pcOut + 32'd4);
+        check_result("RegWEn", RegWEn, 32'd0);
+        check_result("PCSel", PCSel, 32'd0);
+        check_result("regData1", regData1, 32'd54);
+        check_result("regData2", regData2, 32'd76);
+        #20
+        $display("Test 42: beq   x11, x11, d0");
+        check_result("Alu-in 1", aluIn1, pcOut);
+        check_result("Alu-in 2", aluIn2, 32'd4);
+        check_result("ALU Out", aluOut, pcOut + 32'd4);
+        check_result("RegWEn", RegWEn, 32'd0);
+        check_result("PCSel", PCSel, 32'd1);
+        check_result("regData1", regData1, 32'd76);
+        check_result("regData2", regData2, 32'd76);
+        #20
+        $display("Test 43: bne   x11, x12, d4");
+        check_result("Alu-in 1", aluIn1, pcOut);
+        check_result("Alu-in 2", aluIn2, 32'd4);
+        check_result("ALU Out", aluOut, pcOut + 32'd4);
+        check_result("PCSel", PCSel, 32'd1);
+        check_result("regData1", regData1, 32'd76);
+        check_result("regData2", regData2, 32'd54);
+        #20
+        $display("Test 44: bne   x11, x11, d4");
+        check_result("Alu-in 1", aluIn1, pcOut);
+        check_result("Alu-in 2", aluIn2, 32'd4);
+        check_result("ALU Out", aluOut, pcOut + 32'd4);
+        check_result("PCSel", PCSel, 32'd0);
+        check_result("regData1", regData1, 32'd76);
+        check_result("regData2", regData2, 32'd76);
+        #20
+        $display("Test 45: blt   x11, x12, d4");
+        check_result("Alu-in 1", aluIn1, pcOut);
+        check_result("Alu-in 2", aluIn2, 32'd4);
+        check_result("ALU Out", aluOut, pcOut + 32'd4);
+        check_result("PCSel", PCSel, 32'd0);
+        check_result("regData1", regData1, 32'd76);
+        check_result("regData2", regData2, 32'd54);
+        check_result("BrLT", BrLT, 32'd0);
+        #20
+        $display("Test 46: blt   x12, x11, d4");
+        check_result("Alu-in 1", aluIn1, pcOut);
+        check_result("Alu-in 2", aluIn2, 32'd4);
+        check_result("ALU Out", aluOut, pcOut + 32'd4);
+        check_result("PCSel", PCSel, 32'd1);
+        check_result("regData1", regData1, 32'd54);
+        check_result("regData2", regData2, 32'd76);
+        check_result("BrLT", BrLT, 32'd1);
+        #20
+        $display("Test 47: bltu   x11, x12, d4");
+        check_result("Alu-in 1", aluIn1, pcOut);
+        check_result("Alu-in 2", aluIn2, 32'd4);
+        check_result("ALU Out", aluOut, pcOut + 32'd4);
+        check_result("PCSel", PCSel, 32'd0);
+        check_result("regData1", regData1, 32'd76);
+        check_result("regData2", regData2, 32'd54);
+        check_result("BrLT", BrLT, 32'd0);
+        #20
+        $display("Test 48: bltu   x12, x11, d4");
+        check_result("Alu-in 1", aluIn1, pcOut);
+        check_result("Alu-in 2", aluIn2, 32'd4);
+        check_result("ALU Out", aluOut, pcOut + 32'd4);
+        check_result("PCSel", PCSel, 32'd1);
+        check_result("regData1", regData1, 32'd54);
+        check_result("regData2", regData2, 32'd76);
+        check_result("BrLT", BrLT, 32'd1);
+        #20
+        $display("Test 49: bge   x12, x11, d4");
+        check_result("Alu-in 1", aluIn1, pcOut);
+        check_result("Alu-in 2", aluIn2, 32'd4);
+        check_result("ALU Out", aluOut, pcOut + 32'd4);
+        check_result("PCSel", PCSel, 32'd0);
+        check_result("regData1", regData1, 32'd54);
+        check_result("regData2", regData2, 32'd76);
+        check_result("BrLT", BrLT, 32'd1);
+        #20
+        $display("Test 50: bge   x11, x12, d4");
+        check_result("Alu-in 1", aluIn1, pcOut);
+        check_result("Alu-in 2", aluIn2, 32'd4);
+        check_result("ALU Out", aluOut, pcOut + 32'd4);
+        check_result("PCSel", PCSel, 32'd1);
+        check_result("regData1", regData1, 32'd76);
+        check_result("regData2", regData2, 32'd54);
+        check_result("BrLT", BrLT, 32'd0);
+        #20
+        $display("Test 51: bgeu  x12, x11, d4");
+        check_result("Alu-in 1", aluIn1, pcOut);
+        check_result("Alu-in 2", aluIn2, 32'd4);
+        check_result("ALU Out", aluOut, pcOut + 32'd4);
+        check_result("PCSel", PCSel, 32'd0);
+        check_result("regData1", regData1, 32'd54);
+        check_result("regData2", regData2, 32'd76);
+        check_result("BrLT", BrLT, 32'd1);
+        #20
+        $display("Test 52: bgeu  x11, x12, d4");
+        check_result("Alu-in 1", aluIn1, pcOut);
+        check_result("Alu-in 2", aluIn2, 32'd4);
+        check_result("ALU Out", aluOut, pcOut + 32'd4);
+        check_result("PCSel", PCSel, 32'd1);
+        check_result("regData1", regData1, 32'd76);
+        check_result("regData2", regData2, 32'd54);
+        check_result("BrLT", BrLT, 32'd0);
         #20
 
         $display("Test Summary: Passed %d out of %d tests.", num_passes, num_tests);

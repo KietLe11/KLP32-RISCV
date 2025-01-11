@@ -19,7 +19,13 @@ module immgen(instr, imm_sel, imm_extended);
             3'b001: imm_extend = {{21{instr[31]}}, instr[30:25], instr[11:7]};
 
             // B-Type Immediate extension
-            3'b010:  imm_extend = {{20{instr[31]}}, instr[7], instr[30:25], instr[11:8], 1'b0};
+            /*
+             * instr[31] -> imm[12]
+             * instr[30:25] -> imm[10:5]
+             * instr[7] -> imm[11]
+             * instr[11:8] -> imm[4:1]
+             */
+            3'b010:  imm_extend = {{20{instr[31]}}, instr[31], instr[7], instr[30:25], instr[11:8]};
 
             // U-Type Immediate extension
             3'b011:  imm_extend = {instr[31], instr[30:20], instr[19:12], 12'b0};
@@ -27,10 +33,10 @@ module immgen(instr, imm_sel, imm_extended);
             // J-Type Immediate extension
             /*
              * Immediate interleave decoding:
-             * instr[31] -> 20
-             * instr[30:21] ->  10:1
-             * instr[20] -> 11
-             * instr[19:12] -> 19:12
+             * instr[31] -> imm[20]
+             * instr[30:21] ->  imm[10:1]
+             * instr[20] -> imm[11]
+             * instr[19:12] -> imm[19:12]
              */
             3'b100:  imm_extend = {{12{instr[31]}},
                                     instr[31],
