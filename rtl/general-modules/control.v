@@ -51,16 +51,22 @@ module control (instr, BrLT, BrEq, RegWEn, ImmSel, ALUsrc1,
             end
             7'b1100011 : begin
                 alucontrol = 4'b0000;
-                if(funct3 == 001 & !BrEq) // BNE
-                    branch_pcSel = 1'b1;
-                else if((funct3 == 100 || funct3 == 110)& BrLT) // BLTU and BLT
-                    branch_pcSel = 1'b1;
-                else if(funct3 == 000 & BrEq) // BEQ
-                    branch_pcSel = 1'b1;
-                else if((funct3 == 101 || funct3 == 111) & !BrLT) // BGE and BGEU
-                    branch_pcSel = 1'b0;
-                else
-                    branch_pcSel = 0;
+                case(funct3)
+                    3'b000: // BEQ
+                        branch_pcSel = BrEq;
+                    3'b001: // BNE
+                        branch_pcSel = !BrEq;
+                    3'b100: // BLT
+                        branch_pcSel = BrLT;
+                    3'b101: // BGE
+                        branch_pcSel = !BrLT;
+                    3'b110: // BLTU
+                        branch_pcSel = BrLT;
+                    3'b111: // BGEU
+                        branch_pcSel = !BrLT;
+                    default:
+                        branch_pcSel = 1'b0;
+                endcase
                 controls = {1'b0, 3'b010, 1'b1, 1'b1 ,1'bx, 1'b0, 3'bxxx, 2'b01, branch_pcSel};
             end
             7'b0000011 : begin // LOAD OPERATIONS
