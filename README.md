@@ -57,5 +57,11 @@ Image credit: EECS4201: Computer Architecture, Sebastian Magierowski, York Unive
 | OR              |           |            |         |
 | AND             |           |            |         |
 
-## Important Notes
-OS Instuctions like ECALL and EBREAK and instructions from the zicsr extensions have not been implemented in this version of the processor core.
+### Unsupported Base RV32I Instructions:
+- ECALL
+- EBREAK
+
+## Validation Notes
+- Validation of instructions has been done in rtl/KLP32V1_tb.sv with test cases for each supported instruction.
+- The test instructions are located in: rtl/general-modules/test_instructions.hex
+- To test instructions, add instruction to rtl/general-modules/test_instructions.hex and add test case to rtl/KLP32V1_tb.sv
