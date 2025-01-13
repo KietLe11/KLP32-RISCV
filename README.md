@@ -33,3 +33,6 @@ This projects was developed for Intel Quartus and Simulated on the DE10-Lite Boa
 ## Microarchitecture
 ![alt text](rv32i_microarchitecture.png)
 Image credit: EECS4201: Computer Architecture, Sebastian Magierowski, York University.
+
+## Important Notes
+OS Instuctions like ECALL and EBREAK and instructions from the zicsr extensions have not been implemented in this version of the processor core.
