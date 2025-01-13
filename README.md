@@ -34,5 +34,12 @@ This projects was developed for Intel Quartus and Simulated on the DE10-Lite Boa
 ![alt text](rv32i_microarchitecture.png)
 Image credit: EECS4201: Computer Architecture, Sebastian Magierowski, York University.
 
+### Supported RV32I Instructions
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
+
 ## Important Notes
 OS Instuctions like ECALL and EBREAK and instructions from the zicsr extensions have not been implemented in this version of the processor core.
