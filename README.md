@@ -70,7 +70,8 @@ Image credit: EECS4201: Computer Architecture, Sebastian Magierowski, York Unive
 
 #### Immediate Type Instruction Formats:
 ![I-Type Instruction Format](resources/I-Type-Instruction.png)
-##### Shift Immediate Instruction Format:
+
+#### Shift Immediate Instruction Format:
 ![Shift Immediate Instruction Format](resources/Shift-I-Type-Instructions.png)
 
 ***
