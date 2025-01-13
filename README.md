@@ -34,6 +34,11 @@ This projects was developed for Intel Quartus and Simulated on the DE10-Lite Boa
 ![alt text](resources/rv32i_microarchitecture.png)
 Image credit: EECS4201: Computer Architecture, Sebastian Magierowski, York University.
 
+### Validation Notes
+- Validation of instructions has been done in rtl/KLP32V1_tb.sv with test cases for each supported instruction.
+- The test instructions are located in: rtl/general-modules/test_instructions.hex
+- To test instructions, add instruction to rtl/general-modules/test_instructions.hex and add test case to rtl/KLP32V1_tb.sv
+
 ### Supported RV32I Instructions
 | Data Processing | Branching | Load/Store | Jumping | U-Immediate |
 | --------------- | --------- | -----------| ------- | ----------- |
@@ -57,6 +62,8 @@ Image credit: EECS4201: Computer Architecture, Sebastian Magierowski, York Unive
 | OR              |           |            |         |             |
 | AND             |           |            |         |             |
 
+***
+
 ### Data Processing Instruction Formats
 #### Register Type Instruction Format:
 ![R-Type Instruction Format](resources/R-Type-Instructions.png)
@@ -66,12 +73,18 @@ Image credit: EECS4201: Computer Architecture, Sebastian Magierowski, York Unive
 ##### Shift Immediate Instruction Format:
 ![Shift Immediate Instruction Format](resources/Shift-I-Type-Instructions.png)
 
+***
+
 ### Branch Instruction Formats
 #### B-Type Type Instruction Format:
 ![B-Type Type Instruction Format](resources/B-Type-Instructions.png)
 
+***
+
 ### Load/Store Type Instruction Formats:
 ![Load/Store Type Instruction Format](resources/LoadStoreInstructions.png)
+
+***
 
 ### Jump and Link Instruction Formats
 #### JAL Instruction Format:
@@ -79,11 +92,8 @@ Image credit: EECS4201: Computer Architecture, Sebastian Magierowski, York Unive
 #### JALR Instruction Format:
 ![JALR Instruction Format](resources/JALR.png)
 
+***
+
 ### Unsupported Base RV32I Instructions:
 - ECALL
 - EBREAK
-
-### Validation Notes
-- Validation of instructions has been done in rtl/KLP32V1_tb.sv with test cases for each supported instruction.
-- The test instructions are located in: rtl/general-modules/test_instructions.hex
-- To test instructions, add instruction to rtl/general-modules/test_instructions.hex and add test case to rtl/KLP32V1_tb.sv
