@@ -31,31 +31,53 @@ This projects was developed for Intel Quartus and Simulated on the DE10-Lite Boa
       └── README.md
 
 ## Microarchitecture
-![alt text](rv32i_microarchitecture.png)
+![alt text](resources/rv32i_microarchitecture.png)
 Image credit: EECS4201: Computer Architecture, Sebastian Magierowski, York University.
 
 ### Supported RV32I Instructions
-| Data Processing | Branching | Load/Store | Jumping |
-| --------------- | --------- | -----------| ------- |
-| ADDI            | BEQ       | LB         | JAL     |
-| SLTI            | BNE       | LW         | JALR    |
-| SLTIU           | BLT       | LBU        |         |
-| XORI            | BGE       | LHU        |         |
-| ORI             | BLTU      | SB         |         |
-| ANDI            | BGEU      | SW         |         |
-| SLLI            |           | LUI        |         |
-| SRLI            |           |            |         |
-| SRAI            |           |            |         |
-| ADD             |           |            |         |
-| SUB             |           |            |         |
-| SLL             |           |            |         |
-| SLT             |           |            |         |
-| SLTU            |           |            |         |
-| XOR             |           |            |         |
-| SRL             |           |            |         |
-| SRA             |           |            |         |
-| OR              |           |            |         |
-| AND             |           |            |         |
+| Data Processing | Branching | Load/Store | Jumping | U-Immediate |
+| --------------- | --------- | -----------| ------- | ----------- |
+| ADDI            | BEQ       | LB         | JAL     | LUI         |
+| SLTI            | BNE       | LW         | JALR    | AUIPC       |
+| SLTIU           | BLT       | LBU        |         |             |
+| XORI            | BGE       | LHU        |         |             |
+| ORI             | BLTU      | SB         |         |             |
+| ANDI            | BGEU      | SW         |         |             |
+| SLLI            |           |            |         |             |
+| SRLI            |           |            |         |             |
+| SRAI            |           |            |         |             |
+| ADD             |           |            |         |             |
+| SUB             |           |            |         |             |
+| SLL             |           |            |         |             |
+| SLT             |           |            |         |             |
+| SLTU            |           |            |         |             |
+| XOR             |           |            |         |             |
+| SRL             |           |            |         |             |
+| SRA             |           |            |         |             |
+| OR              |           |            |         |             |
+| AND             |           |            |         |             |
+
+### Data Processing Instruction Formats
+#### Register Type Instruction Format:
+![R-Type Instruction Format](resources/R-Type-Instructions.png)
+
+#### Immediate Type Instruction Formats:
+![I-Type Instruction Format](resources/I-Type-Instruction.png)
+##### Shift Immediate Instruction Format:
+![Shift Immediate Instruction Format](resources/Shift-I-Type-Instructions.png)
+
+### Branch Instruction Formats
+#### B-Type Type Instruction Format:
+![B-Type Type Instruction Format](resources/B-Type-Instructions.png)
+
+### Load/Store Type Instruction Formats:
+![Load/Store Type Instruction Format](resources/LoadStoreInstructions.png)
+
+### Jump and Link Instruction Formats
+#### JAL Instruction Format:
+![JAL Instruction Format](resources/JAL.png)
+#### JALR Instruction Format:
+![JALR Instruction Format](resources/JALR.png)
 
 ### Unsupported Base RV32I Instructions:
 - ECALL
