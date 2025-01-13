@@ -34,12 +34,12 @@ This projects was developed for Intel Quartus and Simulated on the DE10-Lite Boa
 ![alt text](resources/rv32i_microarchitecture.png)
 Image credit: EECS4201: Computer Architecture, Sebastian Magierowski, York University.
 
-### Validation Notes
+## Validation
 - Validation of instructions has been done in rtl/KLP32V1_tb.sv with test cases for each supported instruction.
 - The test instructions are located in: rtl/general-modules/test_instructions.hex
 - To test instructions, add instruction to rtl/general-modules/test_instructions.hex and add test case to rtl/KLP32V1_tb.sv
 
-### Supported RV32I Instructions
+## Supported RV32I Instructions
 | Data Processing | Branching | Load/Store | Jumping | U-Immediate |
 | --------------- | --------- | -----------| ------- | ----------- |
 | ADDI            | BEQ       | LB         | JAL     | LUI         |
@@ -95,6 +95,6 @@ Image credit: EECS4201: Computer Architecture, Sebastian Magierowski, York Unive
 
 ***
 
-### Unsupported Base RV32I Instructions:
+## Unsupported Base RV32I Instructions:
 - ECALL
 - EBREAK
