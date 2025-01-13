@@ -82,7 +82,7 @@ Image credit: EECS4201: Computer Architecture, Sebastian Magierowski, York Unive
 
 ***
 
-### Load/Store Type Instruction Formats:
+### Load/Store Type Instruction Formats
 ![Load/Store Type Instruction Format](resources/LoadStoreInstructions.png)
 
 ***
