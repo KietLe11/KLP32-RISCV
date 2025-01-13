@@ -61,7 +61,7 @@ Image credit: EECS4201: Computer Architecture, Sebastian Magierowski, York Unive
 - ECALL
 - EBREAK
 
-## Validation Notes
+### Validation Notes
 - Validation of instructions has been done in rtl/KLP32V1_tb.sv with test cases for each supported instruction.
 - The test instructions are located in: rtl/general-modules/test_instructions.hex
 - To test instructions, add instruction to rtl/general-modules/test_instructions.hex and add test case to rtl/KLP32V1_tb.sv
