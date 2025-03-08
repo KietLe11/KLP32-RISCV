@@ -4,10 +4,10 @@ module fetch (
     input [31:0] i_alu_in,
     input i_pc_sel,
 
-    output [31:0] o_pc_inc_out,
-    output [31:0] o_pc_out,
-    output [31:0] o_inst
-)
+    output logic [31:0] o_fetch_pc_inc,
+    output logic [31:0] o_fetch_pc,
+    output logic [31:0] o_fetch_inst
+);
 
     wire [31:0] inst, pc_value, pc_inc_out, pcSelMuxOut;
 
@@ -21,8 +21,16 @@ module fetch (
     // Instruction Memory
     inst_memory32 instMem(.addr(pc_value), .inst(inst));
 
-    assign o_inst = inst;
-    assign o_pc_inc_out = pc_inc_out;
-    assign o_pc_out = pc_inc_out;
+    always_ff @(posedge clk or posedge reset) begin
+        if (reset) begin
+            o_fetch_pc_inc <= 32'b0;
+            o_fetch_pc <= 32'b0;
+            o_fetch_inst <= 32'b0;
+        end else begin
+            o_fetch_pc_inc <= pc_inc_out;
+            o_fetch_pc <= pc_value;
+            o_fetch_inst <= inst;
+        end
+    end
 
 endmodule

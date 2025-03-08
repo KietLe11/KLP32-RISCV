@@ -10,6 +10,7 @@ module control (instr, BrLT, BrEq, RegWEn, ImmSel, ALUsrc1,
     output [2:0] ImmSel;
     output [3:0] AluSEL;
     output [1:0] WBSel;
+
     reg [6:0] opcode;
     reg [2:0] funct3;
     reg branch_pcSel;
