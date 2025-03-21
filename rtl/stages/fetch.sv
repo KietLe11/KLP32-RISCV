@@ -21,16 +21,20 @@ module fetch (
     // Instruction Memory
     inst_memory32 instMem(.addr(pc_value), .inst(inst));
 
-    always_ff @(posedge clk or posedge reset) begin
-        if (reset) begin
-            o_fetch_pc_inc <= 32'b0;
-            o_fetch_pc <= 32'b0;
-            o_fetch_inst <= 32'b0;
-        end else begin
-            o_fetch_pc_inc <= pc_inc_out;
-            o_fetch_pc <= pc_value;
-            o_fetch_inst <= inst;
-        end
-    end
+    o_fetch_pc_inc <= pc_inc_out;
+    o_fetch_pc <= pc_value;
+    o_fetch_inst <= inst;
+
+    // always_ff @(posedge clk or posedge reset) begin
+    //     if (reset) begin
+    //         o_fetch_pc_inc <= 32'b0;
+    //         o_fetch_pc <= 32'b0;
+    //         o_fetch_inst <= 32'b0;
+    //     end else begin
+    //         o_fetch_pc_inc <= pc_inc_out;
+    //         o_fetch_pc <= pc_value;
+    //         o_fetch_inst <= inst;
+    //     end
+    // end
 
 endmodule

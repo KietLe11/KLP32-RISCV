@@ -2,12 +2,12 @@ module execute (
     input clk,
     input reset,
 
-    input [31:0] i_inst,
-    input [31:0] i_pc,
-    input [31:0] i_pc_inc,
+    input logic [31:0] i_inst,
+    input logic [31:0] i_pc,
+    input logic [31:0] i_pc_inc,
 
-    input i_data_1,
-    input i_data_2,
+    input logic [31:0] i_data_1,
+    input logic [31:0] i_data_2,
 
     input logic [25:0] i_immediate,
     input logic [2:0] i_imm_sel,
@@ -24,12 +24,14 @@ module execute (
 
     output logic [31:0] o_execute_inst,
     output logic [31:0] o_execute_alu_result,
+    output logic [31:0] o_execute_data_2,
     output logic o_execute_mem_rw,
     output logic [2:0] o_execute_load_store_mode,
     output logic [1:0] o_execute_wb_sel,
     output logic o_execute_pc_sel,
     output logic o_execute_pc,
-    output logic o_execute_pc_inc
+    output logic o_execute_pc_inc,
+    output logic o_execute_reg_wr_en
 );
 
     logic branch_equal, branch_less_than;
@@ -83,26 +85,39 @@ module execute (
     logic execute_pc_sel;
     assign execute_pc_sel = (opcode == 7'b1100011) ? branch_pc_sel : i_pc_sel;
 
-    always_ff @(posedge clk or posedge reset) begin
-        if (reset) begin
-            o_execute_inst                  <= 32'b0;
-            o_execute_alu_result            <= 32'b0;
-            o_execute_mem_rw                <= 1'b0;
-            o_execute_load_store_mode       <= 3'b0;
-            o_execute_wb_sel                <= 2'b0;
-            o_execute_pc_sel                <= 1'b0;
-            o_execute_pc                    <= 32'b0;
-            o_execute_pc_inc                <= 32'b0;
-        end else begin
-            o_execute_inst                  <= i_inst;
-            o_execute_alu_result            <= alu_result;
-            o_execute_mem_rw                <= i_mem_rw;
-            o_execute_load_store_mode       <= i_load_store_mode;
-            o_execute_wb_sel                <= i_wb_sel;
-            o_execute_pc_sel                <= execute_pc_sel;
-            o_execute_pc                    <= i_pc;
-            o_execute_pc_inc                <= i_pc_inc;
-        end
+    always_comb begin
+        o_execute_alu_result        = alu_result;
+        o_execute_inst              = i_inst;
+        o_execute_data_2            = i_data_2;
+        o_execute_load_store_mode   = i_load_store_mode;
+        o_execute_mem_rw            = i_mem_rw;
+        o_execute_pc                = i_pc;
+        o_execute_pc_sel            = execute_pc_sel;
+        o_execute_pc_inc            = i_pc_inc;
+        o_execute_reg_wr_en         = i_reg_wr_en;
+        o_execute_wb_sel            = i_wb_sel;
     end
+
+    // always_ff @(posedge clk or posedge reset) begin
+    //     if (reset) begin
+    //         o_execute_inst                  <= 32'b0;
+    //         o_execute_alu_result            <= 32'b0;
+    //         o_execute_mem_rw                <= 1'b0;
+    //         o_execute_load_store_mode       <= 3'b0;
+    //         o_execute_wb_sel                <= 2'b0;
+    //         o_execute_pc_sel                <= 1'b0;
+    //         o_execute_pc                    <= 32'b0;
+    //         o_execute_pc_inc                <= 32'b0;
+    //     end else begin
+    //         o_execute_inst                  <= i_inst;
+    //         o_execute_alu_result            <= alu_result;
+    //         o_execute_mem_rw                <= i_mem_rw;
+    //         o_execute_load_store_mode       <= i_load_store_mode;
+    //         o_execute_wb_sel                <= i_wb_sel;
+    //         o_execute_pc_sel                <= execute_pc_sel;
+    //         o_execute_pc                    <= i_pc;
+    //         o_execute_pc_inc                <= i_pc_inc;
+    //     end
+    // end
 
 endmodule
