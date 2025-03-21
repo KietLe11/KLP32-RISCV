@@ -80,22 +80,24 @@ module decode (
                         .read_data2(reg_data_2)
                         );
 
-    o_decode_inst               <= i_inst;
-    o_decode_pc                 <= i_pc;
-    o_decode_pc_inc             <= i_pc_inc;
-    o_decode_data_1             <= reg_data_1;
-    o_decode_data_2             <= reg_data_2;
-    o_decode_immediate          <= immediate;
-    o_decode_load_store_mode    <= load_store_mode;
-    o_decode_reg_wr_en          <= reg_wr_en;
-    o_decode_alu_src_1_sel      <= alu_src_1_sel;
-    o_decode_alu_src_2_sel      <= alu_src_2_sel;
-    o_decode_br_u               <= br_u;
-    o_decode_mem_rw             <= mem_rw;
-    o_decode_pc_sel             <= pc_sel;
-    o_decode_imm_sel            <= imm_sel;
-    o_decode_alu_sel            <= alu_sel;
-    o_decode_wb_sel             <= wb_sel;
+    always_comb begin
+        o_decode_inst               = i_inst;
+        o_decode_pc                 = i_pc;
+        o_decode_pc_inc             = i_pc_inc;
+        o_decode_data_1             = reg_data_1;
+        o_decode_data_2             = reg_data_2;
+        o_decode_immediate          = immediate;
+        o_decode_load_store_mode    = load_store_mode;
+        o_decode_reg_wr_en          = reg_wr_en;
+        o_decode_alu_src_1_sel      = alu_src_1_sel;
+        o_decode_alu_src_2_sel      = alu_src_2_sel;
+        o_decode_br_u               = br_u;
+        o_decode_mem_rw             = mem_rw;
+        o_decode_pc_sel             = pc_sel;
+        o_decode_imm_sel            = imm_sel;
+        o_decode_alu_sel            = alu_sel;
+        o_decode_wb_sel             = wb_sel;
+    end
 
     // always_ff @(posedge clk or posedge reset) begin
     //     if (reset) begin

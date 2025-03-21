@@ -17,7 +17,7 @@ module memory (
     output [31:0] o_memory_wb_mux_result
 );
 
-    logic [31:0] writeback dataMemReadOut;
+    logic [31:0] writeback, dataMemReadOut;
 
     // Data Memory
     data_memory32 dataMem(.clk(clk),

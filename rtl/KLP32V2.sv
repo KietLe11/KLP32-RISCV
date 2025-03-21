@@ -150,7 +150,7 @@ module KLP32V2(clk,
         .i_mem_rw(de2_mem_rw),
         .i_pc_sel(de2_pc_sel),
         .i_alu_sel(de2_alu_sel),
-        .i_wb_sel(de2_wb_sel)
+        .i_wb_sel(de2_wb_sel),
         .o_execute_inst(em1_inst),
         .o_execute_alu_result(em1_alu_result),
         .o_execute_data_2(em1_data_2),
@@ -231,6 +231,6 @@ module KLP32V2(clk,
         .o_writeback_reg_wr_en(w_reg_wr_en),
         .o_writeback_wb_mux_result(w_wb_mux_result),
         .o_writeback_write_addr(w_write_addr)
-    )
+    );
 
 endmodule
