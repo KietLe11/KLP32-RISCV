@@ -67,7 +67,7 @@ module decode_tb ();
         reset = 1'b0;
         @(posedge clk);
 
-        for (i = 0; i < numOfInst; i = i + 1) begin
+        for (i = 0; i < NUM_OF_INST; i = i + 1) begin
             $display("Instruction: %h", inst_lut[i]);
             inst = inst_lut[i];
             @(posedge clk);
