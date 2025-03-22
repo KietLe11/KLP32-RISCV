@@ -1,16 +1,12 @@
-module KLP32V2(clk,
-               reset
-               );
+module KLP32V2(input logic clk, input logic reset);
 
-    input logic clk, reset;
-
-    // ============= Fetch-Decode Registers =============
+    // ============= Fetch-Decode (fd1 and fd2) Wires =============
     logic [31:0] fd1_inst, fd2_inst, fd1_pc, fd2_pc, fd1_pc_inc, fd2_pc_inc;
 
-    // ============= Memory-Writeback Register =============
+    // ============= Memory-Writeback (mw) Wires =============
     logic [31:0] mw_writeback;
 
-    // ============= Decode-Execute Registers =============
+    // ============= Decode-Execute (de1 and de2) Wires =============
     logic [31:0] de1_data_1, de1_data_2, de2_data_1, de2_data_2;
     logic [25:0] de1_immediate, de2_immediate;
     logic [2:0] de1_load_store_mode, de2_load_store_mode;
@@ -24,7 +20,7 @@ module KLP32V2(clk,
     logic [3:0] de1_alu_sel, de2_alu_sel;
     logic [1:0] de1_wb_sel, de2_wb_sel;
 
-    // ============= Execute-Memory Stage Registers =============
+    // ============= Execute-Memory (em1 and em2) Wires =============
     logic [31:0] em1_inst, em2_inst, em1_alu_result,
                     em2_alu_result, em1_pc, em2_pc,
                     em1_pc_inc, em2_pc_inc, em1_data_2, em2_data_2;
@@ -32,26 +28,30 @@ module KLP32V2(clk,
     logic [2:0] em1_load_store_mode, em2_load_store_mode;
     logic [1:0] em1_wb_sel, em2_wb_sel;
 
-    // ============= Memory-Writeback Stage Registers =============
+    // ============= Memory-Writeback (mw1 and mw2) Wires =============
     logic [31:0] mw1_inst, mw2_inst, mw1_wb_mux_result, mw2_wb_mux_result;
     logic mw1_pc_sel, mw2_pc_sel, mw1_reg_wr_en, mw2_reg_wr_en;
 
-    // ============= Writeback-End Stage Registers =============
+    // ============= Writeback-End (w) Wires =============
     logic w_reg_wr_en;
     logic [31:0] w_wb_mux_result, w_write_addr;
 
+    // Stage 1: Fetch Module
+    fetch F(
+        .clk(clk),
+        .reset(reset),
 
-    // Fetch Stage Module
-    fetch F(.clk(clk),
-            .reset(reset),
-            .i_alu_in(em2_alu_result),
-            .i_pc_sel(em2_pc_sel),
-            .o_fetch_pc_inc(fd1_pc_inc),
-            .o_fetch_pc(fd1_pc),
-            .o_fetch_inst(fd1_inst)
-            );
+        // Inputs from Stage 3 Execute
+        .i_alu_in(em2_alu_result),
+        .i_pc_sel(em2_pc_sel),
 
-    // ============= Fetch-Decode Pipeline Stage Register =============
+        // Fetch Stage Outputs
+        .o_fetch_pc_inc(fd1_pc_inc),
+        .o_fetch_pc(fd1_pc),
+        .o_fetch_inst(fd1_inst)
+    );
+
+    // ============= Fetch-Decode Pipeline Registers =============
     always_ff @(posedge clk or reset) begin
         if (reset) begin
             fd2_inst        <= 32'b0;
@@ -64,16 +64,22 @@ module KLP32V2(clk,
         end
     end
 
-    // Decode Stage Module
+    // Stage 2: Decode Module
     decode D(
         .clk(clk),
         .reset(reset),
+
+        // Inputs From Stage 1: Fetch
         .i_inst(fd2_inst),
         .i_pc(fd2_pc),
         .i_pc_inc(fd2_pc_inc),
+
+        // From Stage 5: Writeback
         .i_reg_wr_en(w_reg_wr_en),
         .i_write_addr(w_write_addr),
         .i_writeback(w_wb_mux_result),
+
+        // Decode Stage outputs
         .o_decode_inst(de1_inst),
         .o_decode_pc(de1_pc),
         .o_decode_pc_inc(de1_pc_inc),
@@ -92,7 +98,7 @@ module KLP32V2(clk,
         .o_decode_wb_sel(de1_wb_sel)
     );
 
-    // ============= Decode-Execute Pipeline Stage Register =============
+    // ============= Decode-Execute Pipeline Stage Registers =============
     always_ff @(posedge clk or posedge reset) begin
         if (reset) begin
             de2_inst               <= 32'b0;
@@ -131,10 +137,12 @@ module KLP32V2(clk,
         end
     end
 
-    // Execute Stage Module
+    // Stage 3: Execute Module
     execute E(
         .clk(clk),
         .reset(reset),
+
+        // Inputs from Decode Stage
         .i_inst(de2_inst),
         .i_pc(de2_pc),
         .i_pc_inc(de2_pc_inc),
@@ -151,6 +159,8 @@ module KLP32V2(clk,
         .i_pc_sel(de2_pc_sel),
         .i_alu_sel(de2_alu_sel),
         .i_wb_sel(de2_wb_sel),
+
+        // Execute Stage Outputs
         .o_execute_inst(em1_inst),
         .o_execute_alu_result(em1_alu_result),
         .o_execute_data_2(em1_data_2),
@@ -163,7 +173,7 @@ module KLP32V2(clk,
         .o_execute_pc_inc(em1_pc_inc)
     );
 
-    // ============= Execute-Memory Pipeline Stage Register =============
+    // ============= Execute-Memory Pipeline Stage Registers =============
     always_ff @(posedge clk or posedge reset) begin
         if (reset) begin
             em2_inst                  <= 32'b0;
@@ -190,9 +200,11 @@ module KLP32V2(clk,
         end
     end
 
-    // Memory Stage Module
+    // Stage 4: Memory Module
     memory M(
         .clk(clk),
+
+        // Inputs from Execute Stage
         .i_alu_result(em2_alu_result),
         .i_inst(em2_inst),
         .i_load_store_mode(em2_load_store_mode),
@@ -202,13 +214,15 @@ module KLP32V2(clk,
         .i_reg_wr_en(em2_reg_wr_en),
         .i_wb_sel(em2_wb_sel),
         .i_writedata(em2_data_2),
+
+        // Memory Stage Outputs
         .o_memory_inst(mw1_inst),
         .o_memory_pc_sel(mw1_pc_sel),
         .o_memory_reg_wr_en(mw1_reg_wr_en),
         .o_memory_wb_mux_result(mw1_wb_mux_result)
     );
 
-    // ============= Execute-Memory Pipeline Stage Register =============
+    // ============= Execute-Memory Pipeline Stage Registers =============
     always_ff @(posedge clk or posedge reset) begin
         if (reset) begin
             mw2_inst            <= 32'b0;
@@ -223,11 +237,14 @@ module KLP32V2(clk,
         end
     end
 
-    // Writeback Stage Module
+    // Stage 5: Writeback Module
     writeback W(
+        // Inputs from Memory Stage
         .i_inst(mw2_inst),
         .i_reg_wr_en(mw2_reg_wr_en),
         .i_wb_mux_result(mw2_wb_mux_result),
+
+        // Writeback Stage Outputs
         .o_writeback_reg_wr_en(w_reg_wr_en),
         .o_writeback_wb_mux_result(w_wb_mux_result),
         .o_writeback_write_addr(w_write_addr)
