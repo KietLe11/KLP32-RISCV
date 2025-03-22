@@ -1,7 +1,4 @@
 module execute (
-    input clk,
-    input reset,
-
     input logic [31:0] i_inst,
     input logic [31:0] i_pc,
     input logic [31:0] i_pc_inc,
@@ -49,8 +46,14 @@ module execute (
     logic alu_in_A, alu_in_B;
     logic [31:0] alu_result;
     // ALU and ALU Inputs
-    alu_input_mux_A aluInMuxA(.pc_in(i_pc), .data1(i_data_1), .A_select(i_alu_src_1_sel), .out(alu_in_A));
-    alu_input_mux_B aluInMuxB(.data2(i_data_2), .immGenData(imm_gen_ext), .B_select(i_alu_src_2_sel), .out(alu_in_B));
+    alu_input_mux_A aluInMuxA(.pc_in(i_pc),
+                                .data1(i_data_1),
+                                .A_select(i_alu_src_1_sel),
+                                .out(alu_in_A));
+    alu_input_mux_B aluInMuxB(.data2(i_data_2),
+                                .immGenData(imm_gen_ext),
+                                .B_select(i_alu_src_2_sel),
+                                .out(alu_in_B));
     alu32 alu(.X(alu_in_A),
               .Y(alu_in_B),
               .select(i_alu_sel),
@@ -97,27 +100,5 @@ module execute (
         o_execute_reg_wr_en         = i_reg_wr_en;
         o_execute_wb_sel            = i_wb_sel;
     end
-
-    // always_ff @(posedge clk or posedge reset) begin
-    //     if (reset) begin
-    //         o_execute_inst                  <= 32'b0;
-    //         o_execute_alu_result            <= 32'b0;
-    //         o_execute_mem_rw                <= 1'b0;
-    //         o_execute_load_store_mode       <= 3'b0;
-    //         o_execute_wb_sel                <= 2'b0;
-    //         o_execute_pc_sel                <= 1'b0;
-    //         o_execute_pc                    <= 32'b0;
-    //         o_execute_pc_inc                <= 32'b0;
-    //     end else begin
-    //         o_execute_inst                  <= i_inst;
-    //         o_execute_alu_result            <= alu_result;
-    //         o_execute_mem_rw                <= i_mem_rw;
-    //         o_execute_load_store_mode       <= i_load_store_mode;
-    //         o_execute_wb_sel                <= i_wb_sel;
-    //         o_execute_pc_sel                <= execute_pc_sel;
-    //         o_execute_pc                    <= i_pc;
-    //         o_execute_pc_inc                <= i_pc_inc;
-    //     end
-    // end
 
 endmodule

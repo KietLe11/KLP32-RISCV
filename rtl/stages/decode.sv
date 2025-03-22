@@ -1,6 +1,5 @@
 module decode (
     input clk,
-    input reset,
     input logic [31:0] i_inst,
     input logic [31:0] i_pc,
     input logic [31:0] i_pc_inc,
@@ -98,43 +97,5 @@ module decode (
         o_decode_alu_sel            = alu_sel;
         o_decode_wb_sel             = wb_sel;
     end
-
-    // always_ff @(posedge clk or posedge reset) begin
-    //     if (reset) begin
-    //         o_decode_inst               <= 32'b0;
-    //         o_decode_pc                 <= 32'b0;
-    //         o_decode_pc_inc             <= 32'b0;
-    //         o_decode_data_1             <= 32'b0;
-    //         o_decode_data_2             <= 32'b0;
-    //         o_decode_immediate          <= 25'b0;
-    //         o_decode_load_store_mode    <= 3'b0;
-    //         o_decode_reg_wr_en          <= 1'b0;
-    //         o_decode_alu_src_1_sel      <= 1'b0;
-    //         o_decode_alu_src_2_sel      <= 1'b0;
-    //         o_decode_br_u               <= 1'b0;
-    //         o_decode_mem_rw             <= 1'b0;
-    //         o_decode_pc_sel             <= 1'b0;
-    //         o_decode_imm_sel            <= 3'b0;
-    //         o_decode_alu_sel            <= 4'b0;
-    //         o_decode_wb_sel             <= 2'b0;
-    //     end else begin
-    //         o_decode_inst               <= i_inst;
-    //         o_decode_pc                 <= i_pc;
-    //         o_decode_pc_inc             <= i_pc_inc;
-    //         o_decode_data_1             <= reg_data_1;
-    //         o_decode_data_2             <= reg_data_2;
-    //         o_decode_immediate          <= immediate;
-    //         o_decode_load_store_mode    <= load_store_mode;
-    //         o_decode_reg_wr_en          <= reg_wr_en;
-    //         o_decode_alu_src_1_sel      <= alu_src_1_sel;
-    //         o_decode_alu_src_2_sel      <= alu_src_2_sel;
-    //         o_decode_br_u               <= br_u;
-    //         o_decode_mem_rw             <= mem_rw;
-    //         o_decode_pc_sel             <= pc_sel;
-    //         o_decode_imm_sel            <= imm_sel;
-    //         o_decode_alu_sel            <= alu_sel;
-    //         o_decode_wb_sel             <= wb_sel;
-    //     end
-    // end
 
 endmodule

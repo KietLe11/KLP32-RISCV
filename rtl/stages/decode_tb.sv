@@ -23,8 +23,8 @@ module decode_tb ();
     initial clk = 10;
     always #10 clk = ~clk;
 
-    parameter numOfInst = 10;
-    logic unsigned [31:0] inst_lut [numOfInst-1:0] = '{
+    parameter integer numOfInst = 10;
+    logic unsigned [31:0] inst_lut [0:numOfInst-1] = '{
         32'h00A7B833, 32'h00A7A833, 32'h00A79833, 32'h00A7C833, 32'h00A7E833,
         32'h00A7F833, 32'h40F50533, 32'h00400793, 32'h00500513, 32'h00000013
     };
@@ -54,7 +54,7 @@ module decode_tb ();
         .o_decode_wb_sel(decode_wb_sel)
     );
 
-	integer i;
+    integer i;
     initial begin
 
         inst = 32'd0;

@@ -38,6 +38,7 @@ module KLP32V2(input logic clk, input logic reset);
 
     // Stage 1: Fetch Module
     fetch F(
+        // Clock and reset for program counter
         .clk(clk),
         .reset(reset),
 
@@ -66,8 +67,8 @@ module KLP32V2(input logic clk, input logic reset);
 
     // Stage 2: Decode Module
     decode D(
+        // Clock for register writes
         .clk(clk),
-        .reset(reset),
 
         // Inputs From Stage 1: Fetch
         .i_inst(fd2_inst),
@@ -139,9 +140,6 @@ module KLP32V2(input logic clk, input logic reset);
 
     // Stage 3: Execute Module
     execute E(
-        .clk(clk),
-        .reset(reset),
-
         // Inputs from Decode Stage
         .i_inst(de2_inst),
         .i_pc(de2_pc),
@@ -202,6 +200,7 @@ module KLP32V2(input logic clk, input logic reset);
 
     // Stage 4: Memory Module
     memory M(
+        // Clock for memory writes
         .clk(clk),
 
         // Inputs from Execute Stage
