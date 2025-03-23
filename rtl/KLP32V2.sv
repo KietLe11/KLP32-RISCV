@@ -56,7 +56,7 @@ module KLP32V2(input logic clk, input logic reset);
     );
 
     // ============= Fetch-Decode Pipeline Registers =============
-    always_ff @(posedge clk or reset) begin
+    always_ff @(posedge clk or posedge reset) begin
         if (reset) begin
             fd2_inst        <= 32'b0;
             fd2_pc          <= 32'b0;
