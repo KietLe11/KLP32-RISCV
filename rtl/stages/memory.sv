@@ -1,7 +1,7 @@
 module memory (
     input clk,
 
-    input i_alu_result,
+    input [31:0] i_alu_result,
     input [31:0] i_inst,
     input [2:0] i_load_store_mode,
     input i_mem_rw,

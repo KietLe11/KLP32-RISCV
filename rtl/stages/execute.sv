@@ -6,7 +6,7 @@ module execute (
     input logic [31:0] i_data_1,
     input logic [31:0] i_data_2,
 
-    input logic [25:0] i_immediate,
+    input logic [24:0] i_immediate,
     input logic [2:0] i_imm_sel,
 
     input logic [2:0] i_load_store_mode,
@@ -26,8 +26,8 @@ module execute (
     output logic [2:0] o_execute_load_store_mode,
     output logic [1:0] o_execute_wb_sel,
     output logic o_execute_pc_sel,
-    output logic o_execute_pc,
-    output logic o_execute_pc_inc,
+    output logic [31:0] o_execute_pc,
+    output logic [31:0] o_execute_pc_inc,
     output logic o_execute_reg_wr_en
 );
 
@@ -43,7 +43,7 @@ module execute (
     // Immediate Generator
     immgen immGen(.instr(i_immediate), .imm_sel(i_imm_sel), .imm_extended(imm_gen_ext));
 
-    logic alu_in_A, alu_in_B;
+    logic [31:0] alu_in_A, alu_in_B;
     logic [31:0] alu_result;
     // ALU and ALU Inputs
     alu_input_mux_A aluInMuxA(.pc_in(i_pc),

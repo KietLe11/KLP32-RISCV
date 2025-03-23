@@ -7,8 +7,10 @@ module KLP32V2(input logic clk, input logic reset);
     logic [31:0] mw_writeback;
 
     // ============= Decode-Execute (de1 and de2) Wires =============
-    logic [31:0] de1_data_1, de1_data_2, de2_data_1, de2_data_2;
-    logic [25:0] de1_immediate, de2_immediate;
+    logic [31:0] de1_inst, de2_inst, de1_data_1, de2_data_1,
+                    de1_data_2, de2_data_2, de1_pc, de2_pc,
+                    de1_pc_inc, de2_pc_inc;
+    logic [24:0] de1_immediate, de2_immediate;
     logic [2:0] de1_load_store_mode, de2_load_store_mode;
     logic de1_reg_wr_en, de2_reg_wr_en;
     logic de1_alu_src_1_sel, de2_alu_src_1_sel;
@@ -34,7 +36,8 @@ module KLP32V2(input logic clk, input logic reset);
 
     // ============= Writeback-End (w) Wires =============
     logic w_reg_wr_en;
-    logic [31:0] w_wb_mux_result, w_write_addr;
+    logic [31:0] w_wb_mux_result;
+    logic [4:0] w_write_addr;
 
     // Stage 1: Fetch Module
     fetch F(
@@ -164,7 +167,7 @@ module KLP32V2(input logic clk, input logic reset);
         .o_execute_data_2(em1_data_2),
         .o_execute_mem_rw(em1_mem_rw),
         .o_execute_load_store_mode(em1_load_store_mode),
-        .o_reg_wr_en(em1_reg_wr_en),
+        .o_execute_reg_wr_en(em1_reg_wr_en),
         .o_execute_wb_sel(em1_wb_sel),
         .o_execute_pc_sel(em1_pc_sel),
         .o_execute_pc(em1_pc),

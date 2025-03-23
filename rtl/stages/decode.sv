@@ -5,7 +5,7 @@ module decode (
     input logic [31:0] i_pc_inc,
 
     input logic i_reg_wr_en,
-    input logic [31:0] i_write_addr,
+    input logic [4:0] i_write_addr,
     input logic [31:0] i_writeback,
 
     output logic [31:0] o_decode_inst,
@@ -16,7 +16,7 @@ module decode (
     output logic [31:0] o_decode_data_1,
     output logic [31:0] o_decode_data_2,
 
-    output logic [25:0] o_decode_immediate,
+    output logic [24:0] o_decode_immediate,
 
     output logic [2:0] o_decode_load_store_mode,
     output logic o_decode_reg_wr_en,
