@@ -19,7 +19,7 @@
 #
 # Quartus Prime
 # Version 20.1.0 Build 711 06/05/2020 SJ Lite Edition
-# Date created = 09:53:03  November 06, 2024
+# Date created = 09:53:03  March 23, 2025
 #
 # -------------------------------------------------------------------------- #
 #
@@ -39,7 +39,7 @@
 
 set_global_assignment -name FAMILY "MAX 10"
 set_global_assignment -name DEVICE 10M50DAF484C6GES
-set_global_assignment -name TOP_LEVEL_ENTITY main_v1
+set_global_assignment -name TOP_LEVEL_ENTITY main_v2
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 20.1.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "09:53:03  NOVEMBER 06, 2024"
 set_global_assignment -name LAST_QUARTUS_VERSION "23.1std.1 Lite Edition"
@@ -57,6 +57,15 @@ set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 set_global_assignment -name BOARD "MAX 10 DE10 - Lite"
 set_global_assignment -name EDA_TIME_SCALE "1 ps" -section_id eda_simulation
+set_global_assignment -name SYSTEMVERILOG_FILE ../rtl/KLP32V2_tb.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../rtl/KLP32V2.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../rtl/stages/memory.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../rtl/stages/writeback.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../rtl/stages/execute.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../rtl/stages/decode_tb.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../rtl/stages/decode.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../rtl/stages/fetch.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../rtl/stages/fetch_tb.sv
 set_global_assignment -name VERILOG_FILE "../rtl/general-modules/registers32_tb.v"
 set_global_assignment -name VERILOG_FILE "../rtl/general-modules/registers32.v"
 set_global_assignment -name VERILOG_FILE "../rtl/general-modules/pc_tb.v"
@@ -107,9 +116,7 @@ set_global_assignment -name VERILOG_FILE "../rtl/misc-modules/alu_input_mux_B_tb
 set_global_assignment -name VERILOG_FILE "../rtl/misc-modules/alu_input_mux_B.v"
 set_global_assignment -name VERILOG_FILE "../rtl/misc-modules/alu_input_mux_A_tb.v"
 set_global_assignment -name VERILOG_FILE "../rtl/misc-modules/alu_input_mux_A.v"
-set_global_assignment -name SYSTEMVERILOG_FILE ../rtl/main_v1.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ../rtl/KLP32V1_tb.sv
-set_global_assignment -name SYSTEMVERILOG_FILE ../rtl/KLP32V1.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../rtl/main_v2.sv
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top

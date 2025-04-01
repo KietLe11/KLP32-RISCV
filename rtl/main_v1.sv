@@ -1,4 +1,4 @@
-module main (clk, reset_in);
+module main_v1 (clk, reset_in);
 
     input clk, reset_in;
     logic reset;

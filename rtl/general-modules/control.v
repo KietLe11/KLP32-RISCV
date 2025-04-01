@@ -10,6 +10,7 @@ module control (instr, BrLT, BrEq, RegWEn, ImmSel, ALUsrc1,
     output [2:0] ImmSel;
     output [3:0] AluSEL;
     output [1:0] WBSel;
+
     reg [6:0] opcode;
     reg [2:0] funct3;
     reg branch_pcSel;
@@ -51,23 +52,24 @@ module control (instr, BrLT, BrEq, RegWEn, ImmSel, ALUsrc1,
             end
             7'b1100011 : begin
                 alucontrol = 4'b0000;
-                case(funct3)
-                    3'b000: // BEQ
-                        branch_pcSel = BrEq;
-                    3'b001: // BNE
-                        branch_pcSel = !BrEq;
-                    3'b100: // BLT
-                        branch_pcSel = BrLT;
-                    3'b101: // BGE
-                        branch_pcSel = !BrLT;
-                    3'b110: // BLTU
-                        branch_pcSel = BrLT;
-                    3'b111: // BGEU
-                        branch_pcSel = !BrLT;
-                    default:
-                        branch_pcSel = 1'b0;
-                endcase
-                controls = {1'b0, 3'b010, 1'b1, 1'b1 ,1'bx, 1'b0, 3'bxxx, 2'b01, branch_pcSel};
+                controls = 14'b0_010_1_1_x_0_xxx_01_x;
+                // case(funct3)
+                //     3'b000: // BEQ
+                //         branch_pcSel = BrEq;
+                //     3'b001: // BNE
+                //         branch_pcSel = !BrEq;
+                //     3'b100: // BLT
+                //         branch_pcSel = BrLT;
+                //     3'b101: // BGE
+                //         branch_pcSel = !BrLT;
+                //     3'b110: // BLTU
+                //         branch_pcSel = BrLT;
+                //     3'b111: // BGEU
+                //         branch_pcSel = !BrLT;
+                //     default:
+                //         branch_pcSel = 1'b0;
+                // endcase
+                // controls = {1'b0, 3'b010, 1'b1, 1'b1 ,1'bx, 1'b0, 3'bxxx, 2'b01, branch_pcSel};
             end
             7'b0000011 : begin // LOAD OPERATIONS
                 /*
