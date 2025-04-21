@@ -1,4 +1,15 @@
-module KLP32V2(input logic clk, input logic reset);
+module KLP32V2(
+    input logic clk,
+    input logic reset,
+
+    // MMIO Bus
+    output logic [31:0] bus_addr,
+    output logic [31:0] bus_wr_data,
+    input  logic [31:0] bus_rd_data,
+    output logic bus_cs,
+    output logic bus_wr,
+    output logic bus_rd
+);
 
     // ============= Fetch-Decode (fd1 and fd2) Wires =============
     logic [31:0] fd1_inst, fd2_inst, fd1_pc, fd2_pc, fd1_pc_inc, fd2_pc_inc;
@@ -30,10 +41,22 @@ module KLP32V2(input logic clk, input logic reset);
     logic [2:0] em1_load_store_mode, em2_load_store_mode;
     logic [1:0] em1_wb_sel, em2_wb_sel;
 
+    // MMIO Address Range Detection
+    logic is_mmio;
+    assign is_mmio = (em2_alu_result >= 32'h10000000 && em2_alu_result <= 32'h1FFFFFFF);                     //COME BACK TO THIS
+
+    // MMIO Bus Assignments
+    assign bus_cs   = is_mmio;
+    assign bus_wr   = is_mmio & em2_mem_rw;  // Write if memory write enabled
+    assign bus_rd   = is_mmio & ~em2_mem_rw; // Read if memory read
+    assign bus_addr = em2_alu_result;
+    assign bus_wr_data = em2_data_2;
+
     // ============= Memory-Writeback (mw1 and mw2) Wires =============
     logic [31:0] mw1_inst, mw2_inst, mw1_wb_mux_result, mw2_wb_mux_result;
     logic mw1_pc_sel, mw2_pc_sel, mw1_reg_wr_en, mw2_reg_wr_en;
-
+    
+    
     // ============= Writeback-End (w) Wires =============
     logic w_reg_wr_en;
     logic [31:0] w_wb_mux_result;
@@ -224,6 +247,9 @@ module KLP32V2(input logic clk, input logic reset);
         .o_memory_wb_mux_result(mw1_wb_mux_result)
     );
 
+    // Adjust Writeback Data to Support MMIO Reads
+    assign mw1_wb_mux_result = is_mmio ? bus_rd_data : mw1_wb_mux_result;
+
     // ============= Execute-Memory Pipeline Stage Registers =============
     always_ff @(posedge clk or posedge reset) begin
         if (reset) begin
@@ -253,3 +279,4 @@ module KLP32V2(input logic clk, input logic reset);
     );
 
 endmodule
+
