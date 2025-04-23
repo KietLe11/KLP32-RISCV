@@ -43,7 +43,8 @@ module KLP32V2(
 
     // MMIO Address Range Detection
     logic is_mmio;
-    assign is_mmio = (em2_alu_result >= 32'h10000000 && em2_alu_result <= 32'h1FFFFFFF);                     //COME BACK TO THIS
+    assign is_mmio = (em2_alu_result >= 32'h10000000 &&
+                        em2_alu_result <= 32'h1FFFFFFF); //COME BACK TO THIS
 
     // MMIO Bus Assignments
     assign bus_cs   = is_mmio;
@@ -55,7 +56,7 @@ module KLP32V2(
     // ============= Memory-Writeback (mw1 and mw2) Wires =============
     logic [31:0] mw1_inst, mw2_inst, mw1_wb_mux_result, mw2_wb_mux_result;
     logic mw1_pc_sel, mw2_pc_sel, mw1_reg_wr_en, mw2_reg_wr_en;
-    
+
     // ============= Writeback-End (w) Wires =============
     logic w_reg_wr_en;
     logic [31:0] w_wb_mux_result;
@@ -278,4 +279,3 @@ module KLP32V2(
     );
 
 endmodule
-
