@@ -10,27 +10,21 @@ module bypassUnit (
     output logic data_sel_mux
 ); 
 
-always_comb
-    begin 
-        a_sel_mux = 2'b00; 
-        b_sel_mux = 2'b00; 
-        data_sel_mux = 1'b0; 
-        if(IX_RS1 == IM_RD)
-            a_sel_mux = 2'b01; 
-        end 
-        if(IX_RS1== IW_RD)
-            a_sel_mux = 2'b10; 
-        end 
-        if(IX_RS2 == IM_RD)
-            b_sel_mux = 2'b01;
-        end 
-        if(IX_RS2== IW_RD)
-            a_sel_mux = 2'b10; 
-        end 
-        if(IM_RS2 == IW_RD)
-            data_sel_mux = 1'b1; 
-        end
-    end 
+always_comb begin 
+    a_sel_mux = 2'b00; 
+    b_sel_mux = 2'b00; 
+    data_sel_mux = 1'b0; 
 
+    if (IX_RS1 == IM_RD)
+        a_sel_mux = 2'b01; 
+    if (IX_RS1 == IW_RD)
+        a_sel_mux = 2'b10; 
+    if (IX_RS2 == IM_RD)
+        b_sel_mux = 2'b01;
+    if (IX_RS2 == IW_RD)
+        b_sel_mux = 2'b10; 
+    if (IM_RS2 == IW_RD)
+        data_sel_mux = 1'b1; 
+end
 
-endmodule 
+endmodule
