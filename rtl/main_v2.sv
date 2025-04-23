@@ -1,8 +1,7 @@
-module main_v2 
+module main_v2
     (
-        input logic clk, 
+        input logic clk,
         input logic reset_in
-
     );
 
     // Button on DE10 lite is default high unpressed
@@ -12,6 +11,8 @@ module main_v2
 
     // Instantiate MMCM Clock Generator
 
+    logic [31:0] bus_rd_data, bus_wr_data, bus_addr;
+    logic bus_cs, bus_wr, bus_rd;
 
     // Instantiate CPU
     KLP32V2 processor
@@ -27,12 +28,5 @@ module main_v2
         .bus_wr(bus_wr),
         .bus_rd(bus_rd)
     );
-
-    //Instantiate Peripheral Module
-    io_top io_unit
-    (
-        
-    );
-    
 
 endmodule

@@ -56,7 +56,6 @@ module KLP32V2(
     logic [31:0] mw1_inst, mw2_inst, mw1_wb_mux_result, mw2_wb_mux_result;
     logic mw1_pc_sel, mw2_pc_sel, mw1_reg_wr_en, mw2_reg_wr_en;
     
-    
     // ============= Writeback-End (w) Wires =============
     logic w_reg_wr_en;
     logic [31:0] w_wb_mux_result;
