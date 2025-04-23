@@ -1,4 +1,4 @@
-# KLP32V1 RISC-V RV32I Processor
+# KLP32V2 RISC-V RV32I Processor
 By Kiet Le & Lawrence Prophete
 
 ## About
