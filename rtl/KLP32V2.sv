@@ -38,27 +38,31 @@ module KLP32V2(input logic clk, input logic reset);
     logic w_reg_wr_en;
     logic [31:0] w_wb_mux_result;
     logic [4:0] w_write_addr;
+
     // ============ Bypassing Wires ==============
     logic a_mux_control,b_mux_control,data_mux_control;
-    logic [31:0] a_mux_out, b_mux_out, data_mux_out; 
+    logic [31:0] a_mux_out, b_mux_out, data_mux_out;
+
     // ============ Hazard Unit Wires =============
     logic stall_signal;
+
     // ========== Fetch Wires ===========
     logic i_pc_sel;
-    logic [31:0] i_alu_in; 
-    logic [31:0] prev_inst; 
+    logic [31:0] i_alu_in;
+    logic [31:0] prev_inst;
 
-    // =========== Stall Control For Fetch ============= // 
-    always_ff @(posedge clk)
-        begin
-            if(stall_signal) 
-                begin 
-                i_pc_sel <= 1'b1; 
-                i_alu_in <= prev_inst; 
-            end else begin 
-                i_pc_sel <= em2_pc_sel; 
-                i_alu_in <= em2_alu_result; 
-        end 
+    // =========== Stall Control For Fetch =============
+    always_ff @(posedge clk) begin
+        if(stall_signal)
+            begin
+            i_pc_sel <= 1'b1;
+            i_alu_in <= prev_inst;
+        end else begin
+            i_pc_sel <= em2_pc_sel;
+            i_alu_in <= em2_alu_result;
+        end
+    end
+
     // Stage 1: Fetch Module
     fetch F(
         // Clock and reset for program counter
@@ -88,6 +92,7 @@ module KLP32V2(input logic clk, input logic reset);
             fd2_pc_inc      <= fd1_pc_inc;
         end
     end
+
     // ============== Hazard Detection Unit ==============
     hazardUnit(
         .IX_OPCODE(de2_inst[6:0]),
@@ -101,8 +106,8 @@ module KLP32V2(input logic clk, input logic reset);
         .MEM_RDY(1'b1),
         .stall(stall_signal)
     );
-    // Stage 2: Decode Module
 
+    // Stage 2: Decode Module
     decode D(
         // Clock for register writes
         .clk(clk),
@@ -156,7 +161,7 @@ module KLP32V2(input logic clk, input logic reset);
             de2_alu_sel            <= 4'b0;
             de2_wb_sel             <= 2'b0;
         end else begin
-            if(!stall_signal) begin 
+            if(!stall_signal) begin
                 de2_inst               <= de1_inst           ;
                 de2_pc                 <= de1_pc             ;
                 de2_pc_inc             <= de1_pc_inc         ;
@@ -173,8 +178,8 @@ module KLP32V2(input logic clk, input logic reset);
                 de2_imm_sel            <= de1_imm_sel        ;
                 de2_alu_sel            <= de1_alu_sel        ;
                 de2_wb_sel             <= de1_wb_sel         ;
-            end else begin 
-                 de2_inst              <= de2_inst           ;
+            end else begin
+                de2_inst               <= de2_inst           ;
                 de2_pc                 <= de2_pc             ;
                 de2_pc_inc             <= de2_pc_inc         ;
                 de2_data_1             <= de2_data_1         ;
@@ -190,37 +195,40 @@ module KLP32V2(input logic clk, input logic reset);
                 de2_imm_sel            <= de2_imm_sel        ;
                 de2_alu_sel            <= de2_alu_sel        ;
                 de2_wb_sel             <= de2_wb_sel         ;
+            end
         end
     end
 
-    // Bypass Logic 
-    bypassUnit(
-    .IM_RS2(em2_inst[24:20]),
-    .IX_RS1(de2_data_1), 
-    .IX_RS2(de2_data_2),
-    .IX_RD(de2_inst[11:7]),
-    .IM_RD(em2_inst[11:7]),
-    .IW_RD,(mw2_inst[11:7]),
-    .a_sel_mux(a_mux_control),
-    .b_sel_mux(b_mux_control),
-    .data_sel_mux(data_mux_control),
+    // Bypass Logic
+    bypassUnit bUnit(
+        .IM_RS2(em2_inst[24:20]),
+        .IX_RS1(de2_data_1),
+        .IX_RS2(de2_data_2),
+        .IX_RD(de2_inst[11:7]),
+        .IM_RD(em2_inst[11:7]),
+        .IW_RD(mw2_inst[11:7]),
+        .a_sel_mux(a_mux_control),
+        .b_sel_mux(b_mux_control),
+        .data_sel_mux(data_mux_control)
     );
 
-    // Stage 3: Execute Module //TODO: Fix parameter in the mux
-    three_one_mux A_SEL_MUX( 
-        .in0(de2_data_1), 
-        .in1(em2_data_2), 
-        .in2(w_wb_mux_result), 
-        .control(a_mux_control), 
+    // Stage 3: Execute Module
+    three_one_mux A_SEL_MUX(
+        .in0(de2_data_1),
+        .in1(em2_data_2),
+        .in2(w_wb_mux_result),
+        .control(a_mux_control),
         .mux_out(a_mux_out)
     );
-    three_one_mux B_SEL_MUX( 
-        .in0(de2_data_2), 
-        .in1(em2_data_2), 
-        .in2(w_wb_mux_result), 
-        .control(b_mux_control)
+
+    three_one_mux B_SEL_MUX(
+        .in0(de2_data_2),
+        .in1(em2_data_2),
+        .in2(w_wb_mux_result),
+        .control(b_mux_control),
         .mux_out(b_mux_out)
     );
+
     execute E(
         // Inputs from Decode Stage
         .i_inst(de2_inst),
@@ -267,7 +275,7 @@ module KLP32V2(input logic clk, input logic reset);
             em2_pc                    <= 32'b0;
             em2_pc_inc                <= 32'b0;
         end else begin
-            if(!stall_signal) 
+            if(!stall_signal)
             begin
                 em2_inst                  <= em1_inst           ;
                 em2_alu_result            <= em1_alu_result     ;
@@ -291,15 +299,17 @@ module KLP32V2(input logic clk, input logic reset);
                 em2_pc                    <= em2_pc             ;
                 em2_pc_inc                <= em2_pc_inc         ;
             end
+        end
     end
 
     // Stage 4: Memory Module
     two_one_mux data_mux(
         .in0(em2_data_2),
-        .in1(w_wb_mux_result), 
-        .control(data_mux_control)
+        .in1(w_wb_mux_result),
+        .control(data_mux_control),
         .mux_out(data_mux_out)
     );
+
     memory M(
         // Clock for memory writes
         .clk(clk),
@@ -330,18 +340,19 @@ module KLP32V2(input logic clk, input logic reset);
             mw2_pc_sel          <= 1'b0;
             mw2_reg_wr_en       <= 1'b0;
         end else begin
-            if(!stall) 
+            if(!stall_signal)
             begin
                 mw2_inst            <= mw1_inst         ;
                 mw2_reg_wr_en       <= mw1_reg_wr_en    ;
                 mw2_pc_sel          <= mw1_pc_sel       ;
                 mw2_wb_mux_result   <= mw1_wb_mux_result;
-            end else begin 
+            end else begin
                 mw2_inst            <= mw2_inst         ;
                 mw2_reg_wr_en       <= mw2_reg_wr_en    ;
                 mw2_pc_sel          <= mw2_pc_sel       ;
                 mw2_wb_mux_result   <= mw2_wb_mux_result;
-            end 
+            end
+        end
     end
 
     // Stage 5: Writeback Module
