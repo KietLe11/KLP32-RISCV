@@ -1,12 +1,17 @@
-module two_one_mux #parameter(BIT_WIDTH)(
-    input logic [BIT_WIDTH-1: 0] in0, 
-    input logic [BIT_WIDTH-1: 0] in1, 
-    output logic mux_out, 
+module two_one_mux(
+  input logic [31: 0] in0, 
+  input logic [31: 0] in1, 
+  input logic control, 
+  output logic [31:0] mux_out, 
 ); 
 
 always_comb
     begin
-    mux_out = (control) ? in1 : in0;
+      case(control) 
+        1'b0: mux_out = in0; 
+        1'b1: mux_out = in1; 
+        default: mux_out = in0; 
+      endcase
     end 
 
 endmodule

@@ -63,6 +63,7 @@ module KLP32V2(
     logic [4:0] w_write_addr;
     // ============ Bypassing Wires ==============
     logic a_mux_control,b_mux_control,data_mux_control;
+    logic [31:0] a_mux_out, b_mux_out, data_mux_out; 
     // ============ Hazard Unit Wires =============
     logic stall_signal;
     // ========== Fetch Wires ===========
@@ -112,8 +113,8 @@ module KLP32V2(
     end
     // ============== Hazard Detection Unit ==============
     hazardUnit(
-        .ID_OPCODE(fd2_inst[6:0]),
-        .ID_RS1(fd2[19:15]) ,
+        .IX_OPCODE(de2_inst[6:0]),
+        .ID_RS1(fd2_inst[19:15]) ,
         .ID_RS2(fd2_inst[24:20]) ,
         .IX_RS1(de2_data_1) ,
         .IX_RS2(de2_data_2),
@@ -122,7 +123,7 @@ module KLP32V2(
         .IW_RD(mw2_inst[11:7]) ,
         .MEM_RDY(1'b1),
         .stall(stall_signal)
-    )
+    );
     // Stage 2: Decode Module
 
     decode D(
@@ -217,7 +218,7 @@ module KLP32V2(
 
     // Bypass Logic 
     bypassUnit(
-    .IM_RS2(em2_data_2[]), 
+    .IM_RS2(em2_inst[24:20]),
     .IX_RS1(de2_data_1), 
     .IX_RS2(de2_data_2),
     .IX_RD(de2_inst[11:7]),
@@ -226,28 +227,30 @@ module KLP32V2(
     .a_sel_mux(a_mux_control),
     .b_sel_mux(b_mux_control),
     .data_sel_mux(data_mux_control),
-    )
+    );
 
-    // Stage 3: Execute Module
+    // Stage 3: Execute Module //TODO: Fix parameter in the mux
     three_one_mux A_SEL_MUX( 
         .in0(de2_data_1), 
         .in1(em2_data_2), 
         .in2(w_wb_mux_result), 
-        .control(a_mux_control)
-    )
+        .control(a_mux_control), 
+        .mux_out(a_mux_out)
+    );
     three_one_mux B_SEL_MUX( 
         .in0(de2_data_2), 
         .in1(em2_data_2), 
         .in2(w_wb_mux_result), 
         .control(b_mux_control)
-    )
+        .mux_out(b_mux_out)
+    );
     execute E(
         // Inputs from Decode Stage
         .i_inst(de2_inst),
         .i_pc(de2_pc),
         .i_pc_inc(de2_pc_inc),
-        .i_data_1(de2_data_1),
-        .i_data_2(de2_data_2),
+        .i_data_1(a_mux_out),
+        .i_data_2(b_mux_out),
         .i_immediate(de2_immediate),
         .i_imm_sel(de2_imm_sel),
         .i_load_store_mode(de2_load_store_mode),
@@ -318,7 +321,8 @@ module KLP32V2(
         .in0(em2_data_2),
         .in1(w_wb_mux_result), 
         .control(data_mux_control)
-    )
+        .mux_out(data_mux_out)
+    );
     memory M(
         // Clock for memory writes
         .clk(clk),
@@ -332,7 +336,7 @@ module KLP32V2(
         .i_pc_sel(em2_pc_sel),
         .i_reg_wr_en(em2_reg_wr_en),
         .i_wb_sel(em2_wb_sel),
-        .i_writedata(em2_data_2),
+        .i_writedata(data_mux_out),
 
         // Memory Stage Outputs
         .o_memory_inst(mw1_inst),
