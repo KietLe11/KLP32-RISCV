@@ -54,7 +54,7 @@ module KLP32V2(
     assign bus_wr_data = em2_data_2;
 
     // ============= Memory-Writeback (mw1 and mw2) Wires =============
-    logic [31:0] mw1_inst, mw2_inst, mw1_wb_mux_result, mw2_wb_mux_result;
+    logic [31:0] mw1_inst, mw2_inst, mw1_wb_mux_result, mw2_wb_mux_result, mw1_wb_mux_result_mem;
     logic mw1_pc_sel, mw2_pc_sel, mw1_reg_wr_en, mw2_reg_wr_en;
 
     // ============= Writeback-End (w) Wires =============
@@ -352,11 +352,11 @@ module KLP32V2(
         .o_memory_inst(mw1_inst),
         .o_memory_pc_sel(mw1_pc_sel),
         .o_memory_reg_wr_en(mw1_reg_wr_en),
-        .o_memory_wb_mux_result(mw1_wb_mux_result)
+        .o_memory_wb_mux_result(mw1_wb_mux_result_mem)
     );
 
     // Adjust Writeback Data to Support MMIO Reads
-    assign mw1_wb_mux_result = is_mmio ? bus_rd_data : mw1_wb_mux_result;
+    assign mw1_wb_mux_result = is_mmio ? bus_rd_data : mw1_wb_mux_result_mem;
 
     // ============= Execute-Memory Pipeline Stage Registers =============
     always_ff @(posedge clk or posedge reset) begin
